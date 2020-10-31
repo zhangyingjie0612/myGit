@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IStudentMapper">
+    <select id="getStudents" resultType="java.util.HashMap">
+        select a.*,b.* from (select s.stuName,s.sex,s.university,s.birthplace,m.* from student s left join
+        (select stuId,
+        <foreach collection="list" item="course" separator=",">
+        sum(case when courseId = #{course.courseId} then score else 0 end ) #{course.courseId}
+        </foreach>
+        from score
+        group by stuId)m on s.stuId=m.stuId) a left join (select m.evlContent,x.* from school_evl m join (
+        select stuId
+        ,sum(case when dateId=0 then jobEvlContent else 0 end) '转正评价'
+        ,sum(case when dateId=1 then jobEvlContent else 0 end) '一年评价'
+        ,sum(case when dateId=2 then jobEvlContent else 0 end) '两年评价'
+        ,sum(case when dateId=3 then jobEvlContent else 0 end) '三年评价'
+        from job_evaluation
+        group by stuId) x on m.stuId=x.stuId) b on a.stuId=b.stuId
+    </select>
+    <select id="commandsByIdNum" resultType="Integer">
+        select count(*) from msg where cid=#{cid}
+    </select>
+</mapper>

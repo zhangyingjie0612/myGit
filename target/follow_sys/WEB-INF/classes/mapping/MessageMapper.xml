@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.ssmdemo.mapper.IMessageMapper">
+<!--    根据消息的id查询消息的详情-->
+    <select id="getMsgById" resultMap="msgAndCommand">
+        select m.mid mid,m.content content,c.cid cid,c.cname cname,c.description description from command c,msg m where c.cid=m.cid and m.mid=#{mid}
+    </select>
+    <resultMap id="msgAndCommand" type="Message">
+<!--        id对应表的主键，property是实体类的属性，column是表字段-->
+        <id property="mid" column="mid"></id>
+        <result property="content" column="content"></result>
+<!--    association专门用来处理一对一关系的
+        property="command"：Message实体类的属性为command
+        javaType="Command"：数据的存储类型
+-->
+        <association property="command" javaType="Command">
+            <id property="cid" column="cid"></id>
+            <result property="cName" column="cname"></result>
+            <result property="description" column="description"></result>
+        </association>
+    </resultMap>
+    <insert id="addMsg" parameterType="Message">
+        insert into msg(content,cid) values(#{content},#{command.cid})
+    </insert>
+    <delete id="delMsg">
+        delete from msg where mid=#{mid}
+    </delete>
+<!--    批量更新-->
+    <update id="updateMsg" parameterType="java.util.List">
+        update msg
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="content =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.content!=null">
+                        when mid=#{i.mid} then #{i.content}
+                    </if>
+                    <if test="i.content == null">
+                        when mid=#{i.mid} then msg.content
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where mid in
+        <foreach collection="list" item="i" index="index" separator="," open="(" close=")" >
+            #{i.mid}
+        </foreach>
+    </update>
+<!--    批量新增-->
+    <insert id="addMsgByBatch">
+        insert into msg (content,cid)
+        values
+        <foreach collection="list" item="msg" separator=",">
+            (#{msg.content},#{msg.cid})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxd.dao.IStudentDao">
+
+    <!--boolean updateScoreState(Integer sId);-->
+    <update id="updateScoreState_Teacher">
+        update student set scoreState='1'
+        where sId = #{sId}
+    </update>
+
+    <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
+    <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId classId,c.className className,c.endDate endDate
+        from student s, class c
+        where
+            s.sClass=c.classId
+            and s.sClass=#{sClass}
+            <if test="sName != null and sName != ''">
+                and s.sName like '%' #{sName} '%'
+            </if>
+        order by s.scoreState,s.sId desc
+    </select>
+    <resultMap id="getAllStudent_TeacherMap" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sClass" property="sClass"></result>
+        <result column="sHireDate" property="sHireDate"></result>
+        <result column="scoreState" property="scoreState"></result>
+        <collection property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+            <result column="endDate" property="endDate"></result>
+        </collection>
+    </resultMap>
+
+    <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
+    <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId classId,c.className className,c.endDate endDate
+        from student s, class c
+        where
+            s.sClass=c.classId
+            and s.sClass=#{sClass}
+            <if test="sName != null and sName != ''">
+                and s.sName like '%' #{sName} '%'
+            </if>
+        order by s.scoreState,s.sId desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
+    <resultMap id="getAllStudentByPage_TeacherMap" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sClass" property="sClass"></result>
+        <result column="sHireDate" property="sHireDate"></result>
+        <result column="scoreState" property="scoreState"></result>
+        <collection property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+            <result column="endDate" property="endDate"></result>
+        </collection>
+    </resultMap>
+
+    <!--List<Student> getAllStudent_admin(@Param("sClass") Integer sClass, @Param("sName") String sName);-->
+    <select id="getAllStudent_admin" resultMap="getAllStudentAdminMap">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
+        sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
+        from student s, class c
+        where s.sClass=c.classId
+        <if test="sClass != null and sClass != ''">
+            and s.sClass=#{sClass}
+        </if>
+        <if test="sName != null and sName != ''">
+            and s.sName like '%' #{sName} '%'
+        </if>
+        order by s.sId desc
+    </select>
+    <resultMap id="getAllStudentAdminMap" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sClass" property="sClass"></result>
+        <association property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+        </association>
+    </resultMap>
+
+    <!--List<Student> getStudent_admin(@Param("pageSize") Integer pageSize, @Param("pageIndex") Integer pageIndex, @Param("sClass") Integer sClass, @Param("sName") String sName);-->
+    <select id="getStudent_admin" resultMap="getStudentAdminMap">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
+        sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
+        from student s, class c
+        where s.sClass=c.classId
+        <if test="sClass != null and sClass != ''">
+            and s.sClass=#{sClass}
+        </if>
+        <if test="sName != null and sName != ''">
+            and s.sName like '%' #{sName} '%'
+        </if>
+        order by s.sId desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
+    <resultMap id="getStudentAdminMap" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sClass" property="sClass"></result>
+        <association property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+        </association>
+    </resultMap>
+
+    <!--boolean addStudent_admin(Student student);-->
+    <insert id="addStudent_admin">
+        insert into student
+        <if test="sHireDate == ''">
+            (sName,sSex,sNation,sBirthday,sPlace,sMarry,sPhone,sIdCard,sSchool,sMajor,sPhoto,sRemarks,sClass,deptNo,jobId,projectId)
+            values
+            (#{sName},#{sSex},#{sNation},#{sBirthday},#{sPlace},#{sMarry},#{sPhone},#{sIdCard},#{sSchool},#{sMajor},#{sPhoto},#{sRemarks},#{sClass},#{deptNo},#{jobId},#{projectId})
+        </if>
+        <if test="sHireDate != ''">
+            (sName,sSex,sNation,sBirthday,sPlace,sMarry,sPhone,sIdCard,sSchool,sMajor,sPhoto,sRemarks,sClass,deptNo,jobId,sHireDate,projectId)
+            values
+            (#{sName},#{sSex},#{sNation},#{sBirthday},#{sPlace},#{sMarry},#{sPhone},#{sIdCard},#{sSchool},#{sMajor},#{sPhoto},#{sRemarks},#{sClass},#{deptNo},#{jobId},#{sHireDate},#{projectId})
+        </if>
+    </insert>
+
+    <!--boolean delStudent_admin(Integer sId);-->
+    <delete id="delStudent_admin">
+        delete from student where sId=#{sId}
+    </delete>
+
+    <!--Student getStudentById_admin(Integer sId);-->
+    <select id="getStudentById_admin" resultType="Student">
+        select
+        sId,sName,sSex,sNation,sBirthday,sPlace,sMarry,sPhone,sIdCard,sSchool,sMajor,sPhoto,sRemarks,sClass,deptNo,jobId,sHireDate,projectId
+        from student where sId=#{sId}
+    </select>
+
+    <!--boolean editStudentById_admin(Student student);-->
+    <update id="editStudentById_admin">
+        update student set
+        <if test="sHireDate == ''">
+            sName=#{sName},sSex=#{sSex},sNation=#{sNation},sBirthday=#{sBirthday},sPlace=#{sPlace},sMarry=#{sMarry},
+            sPhone=#{sPhone},sIdCard=#{sIdCard},sSchool=#{sSchool},sMajor=#{sMajor},sPhoto=#{sPhoto},sRemarks=#{sRemarks},
+            sClass=#{sClass},deptNo=#{deptNo},jobId=#{jobId},projectId=#{projectId}
+        </if>
+        <if test="sHireDate != ''">
+            sName=#{sName},sSex=#{sSex},sNation=#{sNation},sBirthday=#{sBirthday},sPlace=#{sPlace},sMarry=#{sMarry},
+            sPhone=#{sPhone},sIdCard=#{sIdCard},sSchool=#{sSchool},sMajor=#{sMajor},sPhoto=#{sPhoto},sRemarks=#{sRemarks},
+            sClass=#{sClass},deptNo=#{deptNo},jobId=#{jobId},sHireDate=#{sHireDate},projectId=#{projectId}
+        </if>
+        where sId=#{sId}
+    </update>
+
+    <select id="GetAllSizeStudent_Manage" resultType="Student">
+        select s.sid from student s, class c where s.sClass=c.classId and  s.projectId=#{projectId}
+        <if test="classId != null and classId != ''">
+            and s.sClass=#{classId}
+        </if>
+        <if test="empName != null and empName != ''">
+            and s.sName like '%' #{empName} '%'
+        </if>
+        <if test="empId != null and empId != ''">
+            and s.sId=#{empId}
+        </if>
+        order by s.shiredate desc
+    </select>
+    <select id="getStudentById_Manage" resultType="map">
+    select  s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
+    s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
+    sMajor,s.sphoto sPhoto,s.sremarks sRemarks,s.sClass sClass,s.deptno deptNo,s.jobId jobId,s.shiredate sHireDate
+    ,s.projectId projectId,s.appraiseState appraiseState, d.deptname deptName,j.jobName jobName from student s,dept d,job j
+    where s.deptno=d.deptno and s.jobid=j.jobid and sid=#{sId}
+    </select>
+    <select id="GetAllPageStudent_Manage"  resultMap="stu_Manage">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
+        s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
+        sMajor,s.sphoto sPhoto,s.sremarks sRemarks,s.sClass sClass,s.deptno deptNo,s.jobId jobId,s.shiredate sHireDate
+        ,s.projectId projectId,s.appraiseState appraiseState,c.className className,c.classId classId
+        from student s, class c where s.sClass=c.classId and s.projectId=#{projectId}
+        <if test="classId != null and classId != ''">
+            and s.sClass=#{classId}
+        </if>
+        <if test="empName != null and empName != ''">
+            and s.sName like '%' #{empName} '%'
+        </if>
+        <if test="empId != null and empId != ''">
+            and s.sId=#{empId}
+        </if>
+        order by s.shiredate desc
+        limit ${limit * (page - 1)}, ${limit}
+    </select>
+    <resultMap id="stu_Manage" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sNation" property="sNation"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sMarry" property="sMarry"></result>
+        <result column="sIdCard" property="sIdCard"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPtoto" property="sPhoto"></result>
+        <result column="sRemarks" property="sRemarks"></result>
+        <result column="deptNo" property="deptNo"></result>
+        <result column="jobId" property="jobId"></result>
+        <result column="sHireDate" property="sHireDate"></result>
+        <result column="projectId" property="projectId"></result>
+        <result column="appraiseState" property="appraiseState"></result>
+        <result column="sClass" property="sClass"></result>
+        <association property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+        </association>
+    </resultMap>
+    <update id="changeAppraiseState_Manage">
+        update student set appraisestate=#{appraiseState} where sid=#{sId}
+    </update>
+
+    <!--List<Student> getStudentByClassId_admin(Integer classId)-->
+    <select id="getStudentByClassId_admin" resultType="Student">
+        select
+        sId,sName,sSex,sNation,sBirthday,sPlace,sMarry
+        from student where sClass=#{classId}
+    </select>
+</mapper>
