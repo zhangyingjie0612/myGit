@@ -15,8 +15,8 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface IStudentService extends IService<Student> {
-//    //管理员看到的学生列表
-//    List<Map<String,Object>> getStudents(List<Course> courseId,Integer counts, Integer pageSize, String sName,String cName);
     //管理员看到的学生列表
-    List<Map<String,Object>> getStudents(List<Course> courseId);
+    List<Map<String,Object>> getStudents(List<Course> courseId,Integer counts, Integer pageSize);
+//    //管理员看到的学生列表
+//    List<Map<String,Object>> getStudents(List<Course> courseId);
 }
