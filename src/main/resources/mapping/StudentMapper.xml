@@ -19,6 +19,6 @@
         ,sum(case when dateid=3 then jobevlcontent else 0 end) s4
         from job_evaluation
         group by stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
-        limit
+        limit #{counts},#{pageSize}
     </select>
 </mapper>
