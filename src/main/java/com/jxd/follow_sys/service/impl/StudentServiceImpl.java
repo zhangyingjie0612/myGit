@@ -27,10 +27,10 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
      * @Description:管理员看到的学生列表
      * @Date:14:42 2020/10/31
      */
-//    public List<Map<String, Object>> getStudents(List<Course> courseId,Integer counts, Integer pageSize, String sName,String cName) {
-//        return iStudentService.getStudents(courseId,counts,pageSize,sName,cName);
-//    }
-    public List<Map<String, Object>> getStudents(List<Course> courseId) {
-        return iStudentMapper.getStudents(courseId);
+    public List<Map<String, Object>> getStudents(List<Course> courseId,Integer counts, Integer pageSize) {
+        return iStudentMapper.getStudents(courseId,counts,pageSize);
     }
+//    public List<Map<String, Object>> getStudents(List<Course> courseId) {
+//        return iStudentMapper.getStudents(courseId);
+//    }
 }
