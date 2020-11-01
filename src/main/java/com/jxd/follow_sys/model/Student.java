@@ -31,12 +31,14 @@ public class Student {
     private int state;//0/1/2/3 培训/转正1年/2年/3年  默认为0
     private String className;
     private String deptName;
+    private String job;
 
     public Student() {
     }
 
     public Student(int stuId, String stuName, String sex, String nation, String birthday, String birthplace, String marry,
-                   int telephone, String idCard, String university, String major, String photo, String note, int state, String className, String deptName) {
+                   int telephone, String idCard, String university, String major, String photo, String note, int state,
+                   String className, String deptName, String job) {
         this.stuId = stuId;
         this.stuName = stuName;
         this.sex = sex;
@@ -53,6 +55,15 @@ public class Student {
         this.state = state;
         this.className = className;
         this.deptName = deptName;
+        this.job = job;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 
     public int getStuId() {
