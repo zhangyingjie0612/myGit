@@ -27,20 +27,20 @@ public class StudentController {
     @Resource
     ICourseService courseService;
 
-//    @RequestMapping("/getStudentList/{curPage}/{pageSize}/{sName}/{cName}")
-//    @ResponseBody
-//    public List<Map<String,Object>> studentList(@PathVariable("curPage")String curPage,
-//                                                @PathVariable("pageSize")String pageSize, @PathVariable("sName")String sName, @PathVariable("cName")String cName){
-//        List<Course> courses = courseService.list();
-//        Integer counts=(Integer.parseInt(curPage)-1)*Integer.parseInt(pageSize);
-//        List<Map<String,Object>> list=iStudentService.getStudents(courses,counts,Integer.parseInt(pageSize),sName,cName);
-//        return list;
-//    }
-    @RequestMapping("/getStudentList")
+    @RequestMapping("/getStudentList/{curPage}/{pageSize}")
     @ResponseBody
-    public List<Map<String,Object>> studentList(){
+    public List<Map<String,Object>> studentList(@PathVariable("curPage")String curPage,
+                                                @PathVariable("pageSize")String pageSize){
         List<Course> courses = courseService.list();
-        List<Map<String,Object>> list=iStudentService.getStudents(courses);
+        Integer counts=(Integer.parseInt(curPage)-1)*Integer.parseInt(pageSize);
+        List<Map<String,Object>> list=iStudentService.getStudents(courses,counts,Integer.parseInt(pageSize));
         return list;
     }
+//    @RequestMapping("/getStudentList")
+//    @ResponseBody
+//    public List<Map<String,Object>> studentList(){
+//        List<Course> courses = courseService.list();
+//        List<Map<String,Object>> list=iStudentService.getStudents(courses);
+//        return list;
+//    }
 }
