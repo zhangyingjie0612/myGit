@@ -66,4 +66,7 @@
             </if>
         </where>
     </select>
+    <select id="lookStudentInfo" resultType="map">
+        select * from student where stuId=#{stuId}
+    </select>
 </mapper>
