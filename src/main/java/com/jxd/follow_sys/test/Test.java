@@ -30,13 +30,13 @@ public class Test {
 
     @org.junit.Test
     public void test(){
-        List<Course> courses = courseService.list();
-        for(Course c:courses){
-            System.out.println(c.getCourseId());
-        }
-        List<Map<String,Object>> list=iStudentService.getStudents(courses);
-        for(Map map:list){
-            System.out.println(map.get("sex"));
-        }
+//        List<Course> courses = courseService.list();
+//        for(Course c:courses){
+//            System.out.println(c.getCourseId());
+//        }
+//        List<Map<String,Object>> list=iStudentService.getStudents(courses);
+//        for(Map map:list){
+//            System.out.println(map.get("sex"));
+//        }
     }
 }

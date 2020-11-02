@@ -24,13 +24,22 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
     IStudentMapper iStudentMapper;
     /**
      * @Author: zhangyingjie
-     * @Description:管理员看到的学生列表
+     * @Description:管理员看到的学员跟踪表
      * @Date:14:42 2020/10/31
      */
     public List<Map<String, Object>> getStudents(List<Course> courseId,Integer counts, Integer pageSize) {
         return iStudentMapper.getStudents(courseId,counts,pageSize);
     }
-//    public List<Map<String, Object>> getStudents(List<Course> courseId) {
-//        return iStudentMapper.getStudents(courseId);
-//    }
+
+    public List<Map<String, Object>> getStudents2(List<Course> courseId) {
+        return iStudentMapper.getStudents2(courseId);
+    }
+
+    public List<Map<String, Object>> studentsListByPage(Integer counts, Integer pageSize, String sName, String dept, String jobStr) {
+        return iStudentMapper.studentsListByPage(counts,pageSize,sName,dept,jobStr);
+    }
+
+    public List<Map<String, Object>> studentsListByLike(String sName, String dept, String jobStr) {
+        return iStudentMapper.studentsListByLike(sName,dept,jobStr);
+    }
 }

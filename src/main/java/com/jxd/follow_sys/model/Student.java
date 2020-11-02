@@ -58,6 +58,15 @@ public class Student {
         this.job = job;
     }
 
+    public Student(String stuName, String sex, String university, String className, String deptName, String job) {
+        this.stuName = stuName;
+        this.sex = sex;
+        this.university = university;
+        this.className = className;
+        this.deptName = deptName;
+        this.job = job;
+    }
+
     public String getJob() {
         return job;
     }

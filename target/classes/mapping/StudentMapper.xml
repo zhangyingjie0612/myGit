@@ -19,6 +19,51 @@
         ,sum(case when dateid=3 then jobevlcontent else 0 end) s4
         from job_evaluation
         group by stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
-        limit
+        limit #{counts},#{pageSize}
+    </select>
+    <select id="getStudents2" resultType="java.util.HashMap">
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,m.* from student s left join
+        (select stuid,
+        <foreach collection="list" item="course" separator=",">
+            sum(case when courseid = #{course.courseId} then score else 0 end) z${course.courseId}
+        </foreach>
+        from score
+        group by stuid)m on s.stuid=m.stuid) a left join (select m.evlcontent,x.* from school_evl m join (
+        select stuid
+        ,sum(case when dateid=0 then jobevlcontent else 0 end) s1
+        ,sum(case when dateid=1 then jobevlcontent else 0 end) s2
+        ,sum(case when dateid=2 then jobevlcontent else 0 end) s3
+        ,sum(case when dateid=3 then jobevlcontent else 0 end) s4
+        from job_evaluation
+        group by stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
+    </select>
+    <select id="studentsListByPage" resultType="map">
+        select * from student
+        <where>
+            <if test="sName!='all'">
+                stuname like '%' #{sName} '%'
+            </if>
+            <if test="dept!='all'">
+                and deptname like '%' #{dept} '%'
+            </if>
+            <if test="jobStr!='all'">
+                and job like '%' #{jobStr} '%'
+            </if>
+        </where>
+        limit #{counts},#{pageSize}
+    </select>
+    <select id="studentsListByLike" resultType="map">
+        select * from student
+        <where>
+            <if test="sName!='all'">
+                stuname like '%' #{sName} '%'
+            </if>
+            <if test="dept!='all'">
+                and deptname like '%' #{dept} '%'
+            </if>
+            <if test="jobStr!='all'">
+                and job like '%' #{jobStr} '%'
+            </if>
+        </where>
     </select>
 </mapper>
