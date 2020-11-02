@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IUserMapper">
+    <select id="getUserPwd" resultType="map">
+        select u.*,r.roleName from user u join role r on r.roleId=u.roleId limit #{counts},#{pageSize}
+    </select>
+    <select id="getUserPwd2" resultType="map">
+        select u.*,r.roleName from user u join role r on r.roleId=u.roleId
+    </select>
+    <update id="gotoResetPwd">
+        update user set pwd='123' where userId=#{userId}
+    </update>
+</mapper>
