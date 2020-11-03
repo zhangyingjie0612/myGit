@@ -98,7 +98,7 @@
     <update id="updateStudent">
         update student set stuname=#{stuname},sex=#{sex},nation=#{nation},birthday=#{birthday},birthplace=#{birthplace},
         marry=#{marry},telephone=#{telephone},idCard=#{idCard},university=#{university},major=#{major},photo=#{photo},
-        note=#{note},className=#{className},deptName=#{deptName},job=#{job},jobtime=#{jobtime} where stuId=#{stuId}
+        note=#{note},state=#{state},className=#{className},deptName=#{deptName},job=#{job},jobtime=#{jobtime} where stuId=#{stuId}
     </update>
 <!--    删除学生-->
     <delete id="delStudent">

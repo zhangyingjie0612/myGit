@@ -25,4 +25,18 @@ public interface IStudentMapper extends BaseMapper<Student> {
                                                 @Param("sName")String sName,@Param("dept")String dept,@Param("jobStr")String jobStr);
 
     List<Map<String,Object>> studentsListByLike(@Param("sName")String sName,@Param("dept")String dept,@Param("jobStr")String jobStr);
+    //新增学生
+    int addStudent(Student student);
+    //向分数表中插入学生Id
+    int addStudentToScore(int stuId);
+    //向学校评价school_evl表里插入学生id
+    int addStuToSchool(int stuId);
+    //向job_evaluation工作评价表里插入学生id
+    int addStuToJob(int stuId);
+    //编辑学生
+    int updateStudent();
+    //删除学生
+    int delStudent();
+    //批量删除学生
+    int delStudents(List<Integer> ids);
 }
