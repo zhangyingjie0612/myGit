@@ -22,7 +22,7 @@ public class Student {
     private String birthday;
     private String birthplace;
     private String marry;
-    private int telephone;
+    private String telephone;
     private String idCard;
     private String university;
     private String major;
@@ -32,13 +32,14 @@ public class Student {
     private String className;
     private String deptName;
     private String job;
+    private String jobtime;
 
     public Student() {
     }
 
-    public Student(int stuId, String stuName, String sex, String nation, String birthday, String birthplace, String marry,
-                   int telephone, String idCard, String university, String major, String photo, String note, int state,
-                   String className, String deptName, String job) {
+    public Student(int stuId, String stuName, String sex, String nation, String birthday, String birthplace,
+                   String marry, String telephone, String idCard, String university, String major, String photo,
+                   String note, int state, String className, String deptName, String job, String jobtime) {
         this.stuId = stuId;
         this.stuName = stuName;
         this.sex = sex;
@@ -56,23 +57,7 @@ public class Student {
         this.className = className;
         this.deptName = deptName;
         this.job = job;
-    }
-
-//    public Student(String stuName, String sex, String university, String className, String deptName, String job) {
-//        this.stuName = stuName;
-//        this.sex = sex;
-//        this.university = university;
-//        this.className = className;
-//        this.deptName = deptName;
-//        this.job = job;
-//    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
+        this.jobtime = jobtime;
     }
 
     public int getStuId() {
@@ -131,11 +116,11 @@ public class Student {
         this.marry = marry;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -201,5 +186,21 @@ public class Student {
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getJobtime() {
+        return jobtime;
+    }
+
+    public void setJobtime(String jobtime) {
+        this.jobtime = jobtime;
     }
 }
