@@ -6,11 +6,14 @@ import com.jxd.follow_sys.service.IStudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
+
 
 /**
  * @ClassName StudentController
@@ -30,20 +33,21 @@ public class StudentController {
      * @Description:管理员看到的学员跟踪表
      * @Date:16:09 2020/11/1
      */
-    @RequestMapping("/getStudentList/{curPage}/{pageSize}")
+    @RequestMapping("/getStudentList/{curPage}/{pageSize}/{nameStr}")
     @ResponseBody
     public List<Map<String,Object>> studentTrace(@PathVariable("curPage")String curPage,
-                                                @PathVariable("pageSize")String pageSize){
+                                                @PathVariable("pageSize")String pageSize,
+                                                 @PathVariable("nameStr")String nameStr){
         List<Course> courses = courseService.list();
         Integer counts=(Integer.parseInt(curPage)-1)*Integer.parseInt(pageSize);
-        List<Map<String,Object>> list=iStudentService.getStudents(courses,counts,Integer.parseInt(pageSize));
+        List<Map<String,Object>> list=iStudentService.getStudents(courses,nameStr,counts,Integer.parseInt(pageSize));
         return list;
     }
-    @RequestMapping("/getStudentList2")
+    @RequestMapping("/getStudentList2/{nameStr}")
     @ResponseBody
-    public List<Map<String,Object>> studentTrace2(){
+    public List<Map<String,Object>> studentTrace2(@PathVariable("nameStr")String nameStr){
         List<Course> courses = courseService.list();
-        return iStudentService.getStudents2(courses);
+        return iStudentService.getStudents2(courses,nameStr);
     }
     /**
      * @Author: zhangyingjie
@@ -63,5 +67,36 @@ public class StudentController {
     @ResponseBody
     public List<Map<String,Object>> getStudentsByLike(@PathVariable("sName")String sName,@PathVariable("dept")String dept,@PathVariable("jobStr")String jobStr){
         return iStudentService.studentsListByLike(sName,dept,jobStr);
+    }
+
+    /**
+     * @Author: zhangyingjie
+     * @Description:上传学生头像
+     * @Date:17:09 2020/11/2
+     */
+    @RequestMapping("/upload")
+    @ResponseBody
+    public String doUP(@RequestParam("upload") MultipartFile upload)throws Exception{
+        //上传的位置
+        String path = "E:\\IdeaProjects\\follow_sys\\src\\main\\webapp\\static\\images\\";
+        System.out.println("path:"+path);
+        //判断，该路径是否存在
+        File file =new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        //上传文件项
+        //获取上传文件的名称
+        String filename = upload.getOriginalFilename();
+        System.out.println("filename:"+filename);
+        //把文件名称设置唯一值
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        filename=uuid+"-"+filename;
+        System.out.println("filename:"+filename);
+        //完成上传文件
+        File newFile = new File(path,filename);
+        upload.transferTo(newFile);
+        //返回文件名
+        return filename;
     }
 }

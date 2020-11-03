@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface IStudentMapper extends BaseMapper<Student> {
     //管理员看到的学员跟踪表
-    List<Map<String,Object>> getStudents(@Param("list")List<Course> courseId, @Param("counts")Integer counts,
+    List<Map<String,Object>> getStudents(@Param("list")List<Course> courseId, @Param("nameStr")String nameStr,@Param("counts")Integer counts,
                                          @Param("pageSize")Integer pageSize);
-    List<Map<String,Object>> getStudents2(List<Course> courseId);
+    List<Map<String,Object>> getStudents2(@Param("list")List<Course> courseId, @Param("nameStr")String nameStr);
     //学生基本信息列表分页
     List<Map<String,Object>> studentsListByPage(@Param("counts") Integer counts, @Param("pageSize")Integer pageSize,
                                                 @Param("sName")String sName,@Param("dept")String dept,@Param("jobStr")String jobStr);
