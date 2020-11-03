@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface IUserService extends IService<User> {
     //重置密码
-    int gotoResetPwd(String pwd,int userId);
+    int gotoResetPwd(int userId);
     //查询用户信息
     List<Map<String,Object>> getUserPwd(Integer counts,Integer pageSize);
     List<Map<String,Object>> getUserPwd2();

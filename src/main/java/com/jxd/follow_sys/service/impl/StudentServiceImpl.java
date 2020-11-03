@@ -8,6 +8,7 @@ import com.jxd.follow_sys.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +21,19 @@ import java.util.Map;
  */
 @Service
 public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> implements IStudentService {
-    @Autowired
+    @Resource
     IStudentMapper iStudentMapper;
     /**
      * @Author: zhangyingjie
      * @Description:管理员看到的学员跟踪表
      * @Date:14:42 2020/10/31
      */
-    public List<Map<String, Object>> getStudents(List<Course> courseId,Integer counts, Integer pageSize) {
-        return iStudentMapper.getStudents(courseId,counts,pageSize);
+    public List<Map<String, Object>> getStudents(List<Course> courseId,String nameStr,Integer counts, Integer pageSize) {
+        return iStudentMapper.getStudents(courseId,nameStr,counts,pageSize);
     }
 
-    public List<Map<String, Object>> getStudents2(List<Course> courseId) {
-        return iStudentMapper.getStudents2(courseId);
+    public List<Map<String, Object>> getStudents2(List<Course> courseId,String nameStr) {
+        return iStudentMapper.getStudents2(courseId,nameStr);
     }
 
     public List<Map<String, Object>> studentsListByPage(Integer counts, Integer pageSize, String sName, String dept, String jobStr) {

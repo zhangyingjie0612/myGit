@@ -11,15 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static java.util.UUID.randomUUID;
 
 /**
  * @ClassName StudentController
@@ -39,20 +33,21 @@ public class StudentController {
      * @Description:管理员看到的学员跟踪表
      * @Date:16:09 2020/11/1
      */
-    @RequestMapping("/getStudentList/{curPage}/{pageSize}")
+    @RequestMapping("/getStudentList/{curPage}/{pageSize}/{nameStr}")
     @ResponseBody
     public List<Map<String,Object>> studentTrace(@PathVariable("curPage")String curPage,
-                                                @PathVariable("pageSize")String pageSize){
+                                                @PathVariable("pageSize")String pageSize,
+                                                 @PathVariable("nameStr")String nameStr){
         List<Course> courses = courseService.list();
         Integer counts=(Integer.parseInt(curPage)-1)*Integer.parseInt(pageSize);
-        List<Map<String,Object>> list=iStudentService.getStudents(courses,counts,Integer.parseInt(pageSize));
+        List<Map<String,Object>> list=iStudentService.getStudents(courses,nameStr,counts,Integer.parseInt(pageSize));
         return list;
     }
-    @RequestMapping("/getStudentList2")
+    @RequestMapping("/getStudentList2/{nameStr}")
     @ResponseBody
-    public List<Map<String,Object>> studentTrace2(){
+    public List<Map<String,Object>> studentTrace2(@PathVariable("nameStr")String nameStr){
         List<Course> courses = courseService.list();
-        return iStudentService.getStudents2(courses);
+        return iStudentService.getStudents2(courses,nameStr);
     }
     /**
      * @Author: zhangyingjie
@@ -73,17 +68,7 @@ public class StudentController {
     public List<Map<String,Object>> getStudentsByLike(@PathVariable("sName")String sName,@PathVariable("dept")String dept,@PathVariable("jobStr")String jobStr){
         return iStudentService.studentsListByLike(sName,dept,jobStr);
     }
-    /**
-     * @Author: zhangyingjie
-     * @Description:学员基本信息查看
-     * @Date:9:06 2020/11/2
-     */
-    @RequestMapping("/lookStudentInfo")
-    @ResponseBody
-    public List<Map<String,Object>> lookStudentInfo(){
-        List<Course> courses = courseService.list();
-        return iStudentService.getStudents2(courses);
-    }
+
     /**
      * @Author: zhangyingjie
      * @Description:上传学生头像

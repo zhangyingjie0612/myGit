@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface IUserMapper extends BaseMapper<User> {
     //重置密码
-    int gotoResetPwd(@Param("pwd") String pwd, @Param("userId") int userId);
+    int gotoResetPwd(int userId);
     //查询用户信息
     List<Map<String,Object>> getUserPwd(@Param("counts")Integer counts, @Param("pageSize")Integer pageSize);
     List<Map<String,Object>> getUserPwd2();

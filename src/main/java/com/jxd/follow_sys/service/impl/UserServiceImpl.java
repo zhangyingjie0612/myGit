@@ -23,8 +23,8 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
     @Resource
     IUserMapper iUserMapper;
 
-    public int gotoResetPwd(String pwd, int userId) {
-        return iUserMapper.gotoResetPwd(pwd,userId);
+    public int gotoResetPwd(int userId) {
+        return iUserMapper.gotoResetPwd(userId);
     }
 
     public List<Map<String, Object>> getUserPwd(Integer counts, Integer pageSize) {

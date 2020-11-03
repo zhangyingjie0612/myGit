@@ -45,10 +45,11 @@ public class UserController {
      * @Description:重置密码
      * @Date:19:11 2020/11/2
      */
-    @RequestMapping("/gotoResetPwd")
+    @RequestMapping("/gotoResetPwd/{userId}")
     @ResponseBody
-    public int gotoResetPwd(String pwd,int userId){
-        int num=iUserService.gotoResetPwd(pwd,userId);
+    public int gotoResetPwd(@PathVariable("userId")String userId){
+        int id=Integer.parseInt(userId);
+        int num=iUserService.gotoResetPwd(id);
         return num;
     }
 }

@@ -5,37 +5,47 @@
 <!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
 <mapper namespace="com.jxd.follow_sys.mapper.IStudentMapper">
     <select id="getStudents" resultType="java.util.HashMap">
-        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,m.* from student s left join
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,m.* from student s left join
         (select stuid,
         <foreach collection="list" item="course" separator=",">
-        sum(case when courseid = #{course.courseId} then score else 0 end) z${course.courseId}
+        sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
-        group by stuid)m on s.stuid=m.stuid) a left join (select m.evlcontent,x.* from school_evl m join (
-        select stuid
-        ,sum(case when dateid=0 then jobevlcontent else 0 end) s1
-        ,sum(case when dateid=1 then jobevlcontent else 0 end) s2
-        ,sum(case when dateid=2 then jobevlcontent else 0 end) s3
-        ,sum(case when dateid=3 then jobevlcontent else 0 end) s4
-        from job_evaluation
-        group by stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
+        group by stuid)m on s.stuid=m.stuid where s.className='金桥工程48期') a left join (select m.evlcontent,x.* from school_evl m join (
+        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
+        from job_evaluation j
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
+        group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
+        <where>
+            <if test="nameStr!='all'">
+                stuname like '%' #{nameStr} '%'
+            </if>
+        </where>
         limit #{counts},#{pageSize}
     </select>
     <select id="getStudents2" resultType="java.util.HashMap">
-        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,m.* from student s left join
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,m.* from student s left join
         (select stuid,
         <foreach collection="list" item="course" separator=",">
-            sum(case when courseid = #{course.courseId} then score else 0 end) z${course.courseId}
+            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
-        group by stuid)m on s.stuid=m.stuid) a left join (select m.evlcontent,x.* from school_evl m join (
-        select stuid
-        ,sum(case when dateid=0 then jobevlcontent else 0 end) s1
-        ,sum(case when dateid=1 then jobevlcontent else 0 end) s2
-        ,sum(case when dateid=2 then jobevlcontent else 0 end) s3
-        ,sum(case when dateid=3 then jobevlcontent else 0 end) s4
-        from job_evaluation
-        group by stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
+        group by stuid)m on s.stuid=m.stuid where s.className='金桥工程48期') a left join (select m.evlcontent,x.* from school_evl m join (
+        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
+        from job_evaluation j
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
+        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
+        group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
+        <where>
+            <if test="nameStr!='all'">
+                stuname like '%' #{nameStr} '%'
+            </if>
+        </where>
     </select>
     <select id="studentsListByPage" resultType="map">
         select * from student
@@ -44,7 +54,7 @@
                 stuname like '%' #{sName} '%'
             </if>
             <if test="dept!='all'">
-                and deptname like '%' #{dept} '%'
+                and deptName like '%' #{dept} '%'
             </if>
             <if test="jobStr!='all'">
                 and job like '%' #{jobStr} '%'
@@ -59,14 +69,27 @@
                 stuname like '%' #{sName} '%'
             </if>
             <if test="dept!='all'">
-                and deptname like '%' #{dept} '%'
+                and deptName like '%' #{dept} '%'
             </if>
             <if test="jobStr!='all'">
                 and job like '%' #{jobStr} '%'
             </if>
         </where>
     </select>
-    <select id="lookStudentInfo" resultType="map">
-        select * from student where stuId=#{stuId}
-    </select>
+<!--    向学生表插入信息-->
+    <insert id="">
+
+    </insert>
+<!--    向分数表中插入学生Id-->
+    <insert id="">
+
+    </insert>
+<!--    向学校评价school_evl表里插入学生id-->
+    <insert id="">
+
+    </insert>
+<!--    向job_evaluation工作评价表里插入学生id-->
+    <insert id="">
+
+    </insert>
 </mapper>
