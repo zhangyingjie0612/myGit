@@ -117,15 +117,15 @@
         marry=#{marry},telephone=#{telephone},idCard=#{idCard},university=#{university},major=#{major},photo=#{photo},
         note=#{note},state=#{state},className=#{className},deptName=#{deptName},job=#{job},jobtime=#{jobtime} where stuId=#{stuId}
     </update>
-<!--    删除学生-->
-    <delete id="delStudent">
-        delete from student where stuId=#{stuId}
-    </delete>
-<!--    批量删除学生-->
-    <delete id="delStudents">
-        delete from student where stuId in
+<!--    删除学生，状态变为4-->
+    <update id="delStudent">
+        update student set state=4 where stuId=#{stuId}
+    </update>
+<!--    批量删除学生，批量修改状态为4-->
+    <update id="delStudents">
+        update student set state=4 where stuId in
         <foreach collection="list" item="stuId" open="(" close=")" separator=",">
             #{stuId}
         </foreach>
-    </delete>
+    </update>
 </mapper>

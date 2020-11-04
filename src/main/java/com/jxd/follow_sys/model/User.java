@@ -21,7 +21,7 @@ public class User {
     private String email;
     private String note;
     private int flag;
-    private String loginTime;
+    private String birthday;
     private int deptNo;
     private int roleId;
     private String photo;
@@ -31,7 +31,7 @@ public class User {
     }
 
     public User(int userId, String userName, String pwd, String telephone, String phone, String email, String note,
-                int flag, String loginTime, int deptNo, int roleId) {
+                int flag, String birthday, int deptNo, int roleId) {
         this.userId = userId;
         this.userName = userName;
         this.pwd = pwd;
@@ -40,13 +40,13 @@ public class User {
         this.email = email;
         this.note = note;
         this.flag = flag;
-        this.loginTime = loginTime;
+        this.birthday = birthday;
         this.deptNo = deptNo;
         this.roleId = roleId;
     }
 
     public User(int userId, String userName, String pwd, String telephone, String phone, String email, String note,
-                int flag, String loginTime, int deptNo, int roleId, String photo, String sex) {
+                int flag, String birthday, int deptNo, int roleId, String photo, String sex) {
         this.userId = userId;
         this.userName = userName;
         this.pwd = pwd;
@@ -55,7 +55,7 @@ public class User {
         this.email = email;
         this.note = note;
         this.flag = flag;
-        this.loginTime = loginTime;
+        this.birthday = birthday;
         this.deptNo = deptNo;
         this.roleId = roleId;
         this.photo = photo;
@@ -126,12 +126,12 @@ public class User {
         this.flag = flag;
     }
 
-    public String getLoginTime() {
-        return loginTime;
+    public String getbirthday() {
+        return birthday;
     }
 
-    public void setLoginTime(String loginTime) {
-        this.loginTime = loginTime;
+    public void setbirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public int getDeptNo() {
