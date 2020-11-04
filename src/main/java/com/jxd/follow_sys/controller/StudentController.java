@@ -4,7 +4,6 @@ import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.model.Student;
 import com.jxd.follow_sys.service.ICourseService;
 import com.jxd.follow_sys.service.IStudentService;
-import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,15 +120,15 @@ public class StudentController {
      * @Description:返回新增学生的主键向工作评价表中插入
      * @Date:17:35 2020/11/3
      */
-    @RequestMapping("/toAddStudent/{tableData}")
+    @RequestMapping("/toAddStudent/{stuName}/{sex}/{nation}/{birthday}/{birthplace}/{marry}/{telephone}/{idcard}/{university}/{major}/{photo}/{note}/{className}")
     @ResponseBody
-    public boolean toAddStudent(@PathVariable("tableData")String[] array){
+    public boolean toAddStudent(@PathVariable("stuName")String stuName,@PathVariable("sex")String sex,@PathVariable("nation")String nation,@PathVariable("birthday")String birthday,@PathVariable("birthplace")String birthplace,
+                                @PathVariable("marry")String marry,@PathVariable("telephone")String telephone,@PathVariable("idcard")String idCard,@PathVariable("university")String university,@PathVariable("major")String major,
+                                @PathVariable("photo")String photo,@PathVariable("note")String note,@PathVariable("className")String className){
         boolean flag=false;
-        JSONObject jsonObject = JSONObject.fromObject(array);
-        Student student = (Student)JSONObject.toBean(jsonObject,Student.class);
+        Student student=new Student(stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className);
         if(iStudentService.addStudent(student)){
             flag=true;
-            return flag;
         }
         return flag;
     }

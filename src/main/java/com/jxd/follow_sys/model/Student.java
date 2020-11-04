@@ -37,6 +37,22 @@ public class Student {
     public Student() {
     }
 
+    public Student(String stuName, String sex, String nation, String birthday, String birthplace, String marry, String telephone, String idCard, String university, String major, String photo, String note, String className) {
+        this.stuName = stuName;
+        this.sex = sex;
+        this.nation = nation;
+        this.birthday = birthday;
+        this.birthplace = birthplace;
+        this.marry = marry;
+        this.telephone = telephone;
+        this.idCard = idCard;
+        this.university = university;
+        this.major = major;
+        this.photo = photo;
+        this.note = note;
+        this.className = className;
+    }
+
     public Student(int stuId, String stuName, String sex, String nation, String birthday, String birthplace,
                    String marry, String telephone, String idCard, String university, String major, String photo,
                    String note, int state, String className, String deptName, String job, String jobtime) {

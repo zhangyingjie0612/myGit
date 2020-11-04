@@ -95,8 +95,9 @@
 <!--    向学生表插入信息-->
     <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="cid"赋值给实体类的stuId属性-->
     <insert id="addStudent" useGeneratedKeys="true" keyProperty="stuId">
-        insert into student values (null,#{stuName},#{sex},#{nation},#{birthday},#{birthplace},#{marry},#{telephone},
-        #{idCard},#{university},#{major},#{photo},#{note},0,#{className},#{deptName},#{job},#{jobtime})
+        insert into student(stuId,stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className)
+        values (null,#{stuName},#{sex},#{nation},#{birthday},#{birthplace},#{marry},#{telephone},
+        #{idCard},#{university},#{major},#{photo},#{note},#{className})
     </insert>
 <!--    向分数表中插入学生Id-->
     <insert id="addStudentToScore">
