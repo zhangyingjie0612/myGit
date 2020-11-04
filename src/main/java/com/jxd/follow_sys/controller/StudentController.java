@@ -1,8 +1,10 @@
 package com.jxd.follow_sys.controller;
 
 import com.jxd.follow_sys.model.Course;
+import com.jxd.follow_sys.model.Student;
 import com.jxd.follow_sys.service.ICourseService;
 import com.jxd.follow_sys.service.IStudentService;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,21 +35,23 @@ public class StudentController {
      * @Description:管理员看到的学员跟踪表
      * @Date:16:09 2020/11/1
      */
-    @RequestMapping("/getStudentList/{curPage}/{pageSize}/{nameStr}")
+    @RequestMapping("/getStudentList/{curPage}/{pageSize}/{nameStr}/{className}")
     @ResponseBody
     public List<Map<String,Object>> studentTrace(@PathVariable("curPage")String curPage,
                                                 @PathVariable("pageSize")String pageSize,
-                                                 @PathVariable("nameStr")String nameStr){
+                                                 @PathVariable("nameStr")String nameStr,
+                                                 @PathVariable("className")String className){
         List<Course> courses = courseService.list();
         Integer counts=(Integer.parseInt(curPage)-1)*Integer.parseInt(pageSize);
-        List<Map<String,Object>> list=iStudentService.getStudents(courses,nameStr,counts,Integer.parseInt(pageSize));
+        List<Map<String,Object>> list=iStudentService.getStudents(courses,nameStr,className,counts,Integer.parseInt(pageSize));
         return list;
     }
-    @RequestMapping("/getStudentList2/{nameStr}")
+    @RequestMapping("/getStudentList2/{nameStr}/{className}")
     @ResponseBody
-    public List<Map<String,Object>> studentTrace2(@PathVariable("nameStr")String nameStr){
+    public List<Map<String,Object>> studentTrace2(@PathVariable("nameStr")String nameStr,
+                                                  @PathVariable("className")String className){
         List<Course> courses = courseService.list();
-        return iStudentService.getStudents2(courses,nameStr);
+        return iStudentService.getStudents2(courses,nameStr,className);
     }
     /**
      * @Author: zhangyingjie
@@ -99,4 +103,67 @@ public class StudentController {
         //返回文件名
         return filename;
     }
+    /**
+     * @Author: zhangyingjie
+     * @Description:查询所有班级名称
+     * @Date:21:23 2020/11/3
+     */
+    @RequestMapping("/toGetClassName")
+    @ResponseBody
+    public List<Map<String,Object>> toGetClassName(){
+        return iStudentService.getAllClassName();
+    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:新增学生
+     * @Description:返回新增学生的主键向分数表中插入
+     * @Description:返回新增学生的主键向学校评价表中插入
+     * @Description:返回新增学生的主键向工作评价表中插入
+     * @Date:17:35 2020/11/3
+     */
+    @RequestMapping("/toAddStudent/{tableData}")
+    @ResponseBody
+    public boolean toAddStudent(@PathVariable("tableData")String[] array){
+        boolean flag=false;
+        JSONObject jsonObject = JSONObject.fromObject(array);
+        Student student = (Student)JSONObject.toBean(jsonObject,Student.class);
+        if(iStudentService.addStudent(student)){
+            flag=true;
+            return flag;
+        }
+        return flag;
+    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:编辑学生
+     * @Date:17:36 2020/11/3
+     */
+//    @RequestMapping("/toUpdateStudent")
+//    @ResponseBody
+//    public List<Map<String,Object>> toUpdateStudent(@PathVariable("nameStr")String nameStr){
+//        List<Course> courses = courseService.list();
+//        return iStudentService.getStudents2(courses,nameStr);
+//    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:删除单条学生信息
+     * @Date:17:37 2020/11/3
+     */
+//    @RequestMapping("/toDelStudent")
+//    @ResponseBody
+//    public List<Map<String,Object>> toDelStudent(@PathVariable("nameStr")String nameStr){
+//        List<Course> courses = courseService.list();
+//        return iStudentService.getStudents2(courses,nameStr);
+//    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:批量删除学生信息
+     * @Date:17:37 2020/11/3
+     */
+//    @RequestMapping("/toDelStudents")
+//    @ResponseBody
+//    public List<Map<String,Object>> toDelStudents(@PathVariable("nameStr")String nameStr){
+//        List<Course> courses = courseService.list();
+//        return iStudentService.getStudents2(courses,nameStr);
+//    }
 }

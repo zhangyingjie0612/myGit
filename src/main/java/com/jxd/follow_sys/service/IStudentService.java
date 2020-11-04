@@ -16,9 +16,25 @@ import java.util.Map;
  */
 public interface IStudentService extends IService<Student> {
     //管理员看到的学员跟踪表
-    List<Map<String,Object>> getStudents(List<Course> courseId,String nameStr,Integer counts, Integer pageSize);
-    List<Map<String,Object>> getStudents2(List<Course> courseId,String nameStr);
+    List<Map<String,Object>> getStudents(List<Course> courseId,String nameStr,String className,Integer counts, Integer pageSize);
+    List<Map<String,Object>> getStudents2(List<Course> courseId,String nameStr,String className);
     //学生基本信息列表分页
     List<Map<String,Object>> studentsListByPage(Integer counts,Integer pageSize, String sName, String dept, String jobStr);
     List<Map<String,Object>> studentsListByLike(String sName,String dept,String jobStr);
+    //查询所有班级名称
+    List<Map<String,Object>> getAllClassName();
+    //新增学生
+    boolean addStudent(Student student);
+    //向分数表中插入学生Id
+    int addStudentToScore(int stuId);
+    //向学校评价school_evl表里插入学生id
+    int addStuToSchool(int stuId);
+    //向job_evaluation工作评价表里插入学生id
+    int addStuToJob(int stuId);
+    //编辑学生
+    int updateStudent(Student student);
+    //删除学生
+    int delStudent(int stuId);
+    //批量删除学生
+    int delStudents(List<Integer> ids);
 }

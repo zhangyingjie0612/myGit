@@ -11,7 +11,13 @@
         sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
-        group by stuid)m on s.stuid=m.stuid where s.className='金桥工程48期') a left join (select m.evlcontent,x.* from school_evl m join (
+        group by stuid)m on s.stuid=m.stuid
+        <where>
+            <if test="className!='all'">
+                s.className=#{className}
+            </if>
+        </where>
+        ) a left join (select m.evlcontent,x.* from school_evl m join (
         select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
         from job_evaluation j
         left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
@@ -33,7 +39,13 @@
             sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
-        group by stuid)m on s.stuid=m.stuid where s.className='金桥工程48期') a left join (select m.evlcontent,x.* from school_evl m join (
+        group by stuid)m on s.stuid=m.stuid
+        <where>
+            <if test="className!='all'">
+                s.className=#{className}
+            </if>
+        </where>
+        ) a left join (select m.evlcontent,x.* from school_evl m join (
         select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
         from job_evaluation j
         left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
@@ -75,6 +87,10 @@
                 and job like '%' #{jobStr} '%'
             </if>
         </where>
+    </select>
+<!--    查询所有部门名称-->
+    <select id="getAllClassName" resultType="map">
+        select className from class
     </select>
 <!--    向学生表插入信息-->
     <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="cid"赋值给实体类的stuId属性-->

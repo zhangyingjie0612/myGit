@@ -24,6 +24,8 @@ public class User {
     private String loginTime;
     private int deptNo;
     private int roleId;
+    private String photo;
+    private String sex;
 
     public User() {
     }
@@ -41,6 +43,23 @@ public class User {
         this.loginTime = loginTime;
         this.deptNo = deptNo;
         this.roleId = roleId;
+    }
+
+    public User(int userId, String userName, String pwd, String telephone, String phone, String email, String note,
+                int flag, String loginTime, int deptNo, int roleId, String photo, String sex) {
+        this.userId = userId;
+        this.userName = userName;
+        this.pwd = pwd;
+        this.telephone = telephone;
+        this.phone = phone;
+        this.email = email;
+        this.note = note;
+        this.flag = flag;
+        this.loginTime = loginTime;
+        this.deptNo = deptNo;
+        this.roleId = roleId;
+        this.photo = photo;
+        this.sex = sex;
     }
 
     public int getUserId() {
@@ -129,5 +148,21 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }
