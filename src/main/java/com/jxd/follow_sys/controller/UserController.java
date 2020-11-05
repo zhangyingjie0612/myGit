@@ -52,4 +52,14 @@ public class UserController {
         int num=iUserService.gotoResetPwd(id);
         return num;
     }
+    /**
+     * @Author: zhangyingjie
+     * @Description:获得所有的教师姓名列表
+     * @Date:17:09 2020/11/5
+     */
+    @RequestMapping("/getAllTeacherName")
+    @ResponseBody
+    public List<Map<String, Object>> getAllTeacherName(){
+        return iUserService.getAllTeacherName();
+    }
 }

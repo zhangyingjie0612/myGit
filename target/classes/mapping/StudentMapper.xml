@@ -5,9 +5,9 @@
 <!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
 <mapper namespace="com.jxd.follow_sys.mapper.IStudentMapper">
     <select id="getStudents" resultType="java.util.HashMap">
-        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,m.* from student s left join
-        (select stuid,
-        <foreach collection="list" item="course" separator=",">
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
+        (select stuid
+        <foreach collection="list" item="course" open="," separator=",">
         sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
@@ -26,23 +26,25 @@
         left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
         group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
         <where>
+            state!=4
             <if test="nameStr!='all'">
-                stuname like '%' #{nameStr} '%'
+                and stuname like '%' #{nameStr} '%'
             </if>
         </where>
         limit #{counts},#{pageSize}
     </select>
     <select id="getStudents2" resultType="java.util.HashMap">
-        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,m.* from student s left join
-        (select stuid,
-        <foreach collection="list" item="course" separator=",">
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
+        (select stuid
+        <foreach collection="list" item="course" open="," separator=",">
             sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
         group by stuid)m on s.stuid=m.stuid
         <where>
+            state!=4
             <if test="className!='all'">
-                s.className=#{className}
+                and s.className=#{className}
             </if>
         </where>
         ) a left join (select m.evlcontent,x.* from school_evl m join (
@@ -95,7 +97,7 @@
         select className from class
     </select>
 <!--    向学生表插入信息-->
-    <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="cid"赋值给实体类的stuId属性-->
+    <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="stuId"赋值给实体类的stuId属性-->
     <insert id="addStudent" useGeneratedKeys="true" keyProperty="stuId">
         insert into student(stuId,stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className)
         values (null,#{stuName},#{sex},#{nation},#{birthday},#{birthplace},#{marry},#{telephone},

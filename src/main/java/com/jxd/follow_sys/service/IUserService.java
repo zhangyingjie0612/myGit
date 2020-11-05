@@ -19,4 +19,6 @@ public interface IUserService extends IService<User> {
     //查询用户信息
     List<Map<String,Object>> getUserPwd(Integer counts,Integer pageSize);
     List<Map<String,Object>> getUserPwd2();
+    //查询授课老师列表
+    List<Map<String,Object>> getAllTeacherName();
 }

@@ -6,8 +6,8 @@
 <mapper namespace="com.jxd.follow_sys.mapper.IStudentMapper">
     <select id="getStudents" resultType="java.util.HashMap">
         select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
-        (select stuid,
-        <foreach collection="list" item="course" separator=",">
+        (select stuid
+        <foreach collection="list" item="course" open="," separator=",">
         sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
@@ -35,8 +35,8 @@
     </select>
     <select id="getStudents2" resultType="java.util.HashMap">
         select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
-        (select stuid,
-        <foreach collection="list" item="course" separator=",">
+        (select stuid
+        <foreach collection="list" item="course" open="," separator=",">
             sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
@@ -97,7 +97,7 @@
         select className from class
     </select>
 <!--    向学生表插入信息-->
-    <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="cid"赋值给实体类的stuId属性-->
+    <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="stuId"赋值给实体类的stuId属性-->
     <insert id="addStudent" useGeneratedKeys="true" keyProperty="stuId">
         insert into student(stuId,stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className)
         values (null,#{stuName},#{sex},#{nation},#{birthday},#{birthplace},#{marry},#{telephone},

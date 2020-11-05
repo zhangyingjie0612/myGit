@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IClassMapper">
+<!--    向class表里添加班期信息-->
+    <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="id"赋值给实体类的id属性-->
+    <insert id="addClass" useGeneratedKeys="true" keyProperty="id">
+        insert into class(className,userId) values (#{className},#{userId})
+    </insert>
+<!--    向classcourse表里添加该班级对应的课程信息-->
+    <insert id="addClassCourse">
+        insert into classcourse(classid,courseid)
+        values
+        <foreach collection="list" item="i" separator=",">
+            (#{i.classid},#{i.courseid})
+        </foreach>
+    </insert>
+<!--    删除班级对应的课程的信息-->
+    <delete id="delClassCourse">
+        delete from classcourse where classid=#{classid}
+    </delete>
+<!--    修改班级信息-->
+    <update id="updateClass">
+        update class set className=#{className},userId=#{userId}
+    </update>
+<!--    分页-->
+    <select id="getClasses" resultType="map">
+        select c.*,u.userName from class c join user u on u.userId=c.userId
+        <where>
+            <if test="nameStr!='all'">
+                username like '%' #{nameStr} '%'
+            </if>
+            <if test="className!='all'">
+                and className = #{className}
+            </if>
+        </where>
+        limit #{counts},#{pageSize}
+    </select>
+<!--    模糊查询的个数-->
+    <select id="getClassesNum" resultType="map">
+        select c.*,u.userName from class c join user u on u.userId=c.userId
+        <where>
+            <if test="nameStr!='all'">
+                username like '%' #{nameStr} '%'
+            </if>
+            <if test="className!='all'">
+                and className = #{className}
+            </if>
+        </where>
+    </select>
+</mapper>

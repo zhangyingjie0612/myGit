@@ -11,21 +11,21 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @Version 1.0
  */
 @TableName(value = "class")
-public class Class {
+public class Classes {
     @TableId(value = "classId")
     private int classId ;//班级id-主键自增
     private String className;//班级名称
     private int userId;//老师id
 
-    public Class() {
+    public Classes() {
     }
 
-    public Class(String className, int userId) {
+    public Classes(String className, int userId) {
         this.className = className;
         this.userId = userId;
     }
 
-    public Class(int classId, String className, int userId) {
+    public Classes(int classId, String className, int userId) {
         this.classId = classId;
         this.className = className;
         this.userId = userId;

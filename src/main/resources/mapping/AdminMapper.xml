@@ -13,4 +13,8 @@
     <update id="gotoResetPwd">
         update user set pwd='123' where userId=#{userId}
     </update>
+    <!--    查询所有的教师姓名-->
+    <select id="getAllTeacherName" resultType="map">
+        select userName from user where roleId=1
+    </select>
 </mapper>

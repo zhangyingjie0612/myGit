@@ -34,4 +34,8 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
     public List<Map<String, Object>> getUserPwd2() {
         return iUserMapper.getUserPwd2();
     }
+
+    public List<Map<String, Object>> getAllTeacherName() {
+        return iUserMapper.getAllTeacherName();
+    }
 }
