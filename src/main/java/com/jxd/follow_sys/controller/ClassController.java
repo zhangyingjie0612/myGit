@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -83,4 +84,23 @@ public class ClassController {
 //    public List<Map<String,Object>> toGetClassName(){
 //        return iStudentService.getAllClassName();
 //    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:获取全部的课程名称
+     * @Date:18:58 2020/11/5
+     */
+//    @RequestMapping("/getAllCourseName")
+//    @ResponseBody
+//    public String[] getAllCourseName(){
+//        String[] strings=new String[iClassService.getCourseName().size()];
+//        for(int i=0;i<strings.length;i++){
+//            strings[i]= iClassService.getCourseName().get(i);
+//        }
+//        return strings;
+//    }
+    @RequestMapping("/getAllCourseName")
+    @ResponseBody
+    public List<String> getAllCourseName(){
+        return iClassService.getCourseName();
+    }
 }

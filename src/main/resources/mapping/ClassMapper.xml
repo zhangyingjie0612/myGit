@@ -50,4 +50,8 @@
             </if>
         </where>
     </select>
+<!--    获取全部的课程名称-->
+    <select id="getCourseName" resultType="String">
+        select courseName from course where flag !=0
+    </select>
 </mapper>

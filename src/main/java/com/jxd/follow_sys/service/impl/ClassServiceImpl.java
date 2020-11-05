@@ -3,6 +3,7 @@ package com.jxd.follow_sys.service.impl;
 import com.jxd.follow_sys.mapper.IClassMapper;
 import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
+import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.service.IClassService;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class ClassServiceImpl implements IClassService {
         return iClassMapper.getClassesNum(nameStr,className);
     }
 
-    public List<Map<String, Object>> getAllTeacherName() {
-        return iClassMapper.getAllTeacherName();
+    public List<String> getCourseName() {
+        return iClassMapper.getCourseName();
     }
 }

@@ -2,6 +2,7 @@ package com.jxd.follow_sys.service;
 
 import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
+import com.jxd.follow_sys.model.Course;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -26,6 +27,6 @@ public interface IClassService {
     //查询班期信息
     List<Map<String,Object>> getClasses(Integer counts, Integer pageSize,String nameStr,String className);
     List<Map<String,Object>> getClassesNum(String nameStr,String className);
-    //查询授课老师列表
-    List<Map<String,Object>> getAllTeacherName();
+    //获取课程名称
+    List<String> getCourseName();
 }

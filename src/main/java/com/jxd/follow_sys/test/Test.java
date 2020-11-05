@@ -3,6 +3,7 @@ package com.jxd.follow_sys.test;
 import com.jxd.follow_sys.Application;
 import com.jxd.follow_sys.mapper.IStudentMapper;
 import com.jxd.follow_sys.model.Course;
+import com.jxd.follow_sys.service.IClassService;
 import com.jxd.follow_sys.service.ICourseService;
 import com.jxd.follow_sys.service.IStudentService;
 import org.junit.runner.RunWith;
@@ -27,6 +28,8 @@ public class Test {
     IStudentService iStudentService;
     @Resource
     ICourseService courseService;
+    @Resource
+    IClassService iClassService;
 
     @org.junit.Test
     public void test(){
@@ -38,5 +41,6 @@ public class Test {
 //        for(Map map:list){
 //            System.out.println(map.get("sex"));
 //        }
+
     }
 }

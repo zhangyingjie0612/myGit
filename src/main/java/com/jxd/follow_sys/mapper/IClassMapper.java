@@ -2,6 +2,7 @@ package com.jxd.follow_sys.mapper;
 
 import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
+import com.jxd.follow_sys.model.Course;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface IClassMapper {
     //查询班期信息
     List<Map<String,Object>> getClasses(@Param("counts")Integer counts, @Param("pageSize")Integer pageSize,@Param("nameStr")String nameStr,@Param("className")String className);
     List<Map<String,Object>> getClassesNum(@Param("nameStr")String nameStr,@Param("className")String className);
+    //获取课程名称
+    List<String> getCourseName();
 }
