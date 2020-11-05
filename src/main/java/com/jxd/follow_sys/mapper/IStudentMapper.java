@@ -29,8 +29,6 @@ public interface IStudentMapper extends BaseMapper<Student> {
     List<Map<String,Object>> getAllClassName();
     //新增学生
     boolean addStudent(Student student);
-//    boolean addStudent(@Param("stuName")String stuName,@Param("sex")String sex,@Param("nation")String nation,@Param("birthday")String birthday,@Param("birthplace")String birthplace,@Param("marry")String marry,
-//    @Param("telephone")String telephone,@Param("idCard")String idCard,@Param("university")String university,@Param("major")String major,@Param("photo")String photo,@Param("note")String note,@Param("className")String className);
     //向分数表中插入学生Id
     int addStudentToScore(int stuId);
     //向学校评价school_evl表里插入学生id

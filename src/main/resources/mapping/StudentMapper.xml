@@ -62,8 +62,9 @@
     <select id="studentsListByPage" resultType="map">
         select * from student
         <where>
+            state !=4
             <if test="sName!='all'">
-                stuname like '%' #{sName} '%'
+                and stuname like '%' #{sName} '%'
             </if>
             <if test="dept!='all'">
                 and deptName like '%' #{dept} '%'
@@ -77,8 +78,9 @@
     <select id="studentsListByLike" resultType="map">
         select * from student
         <where>
+            state !=4
             <if test="sName!='all'">
-                stuname like '%' #{sName} '%'
+                and stuname like '%' #{sName} '%'
             </if>
             <if test="dept!='all'">
                 and deptName like '%' #{dept} '%'
@@ -113,7 +115,7 @@
     </insert>
 <!--    编辑学生-->
     <update id="updateStudent">
-        update student set stuname=#{stuname},sex=#{sex},nation=#{nation},birthday=#{birthday},birthplace=#{birthplace},
+        update student set stuname=#{stuName},sex=#{sex},nation=#{nation},birthday=#{birthday},birthplace=#{birthplace},
         marry=#{marry},telephone=#{telephone},idCard=#{idCard},university=#{university},major=#{major},photo=#{photo},
         note=#{note},state=#{state},className=#{className},deptName=#{deptName},job=#{job},jobtime=#{jobtime} where stuId=#{stuId}
     </update>

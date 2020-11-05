@@ -126,6 +126,12 @@ public class StudentController {
                                 @PathVariable("marry")String marry,@PathVariable("telephone")String telephone,@PathVariable("idcard")String idCard,@PathVariable("university")String university,@PathVariable("major")String major,
                                 @PathVariable("photo")String photo,@PathVariable("note")String note,@PathVariable("className")String className){
         boolean flag=false;
+        if("null".equals(note)){
+            note=null;
+        }
+        if("null".equals(photo)){
+            photo=null;
+        }
         Student student=new Student(stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className);
         if(iStudentService.addStudent(student)){
             flag=true;
@@ -137,32 +143,59 @@ public class StudentController {
      * @Description:编辑学生
      * @Date:17:36 2020/11/3
      */
-//    @RequestMapping("/toUpdateStudent")
-//    @ResponseBody
-//    public List<Map<String,Object>> toUpdateStudent(@PathVariable("nameStr")String nameStr){
-//        List<Course> courses = courseService.list();
-//        return iStudentService.getStudents2(courses,nameStr);
-//    }
+    @RequestMapping("/toUpdateStudent/{stuId}/{job}/{jobtime}/{deptName}/{state}/{stuName}/{sex}/{nation}/{birthday}/{birthplace}/{marry}/{telephone}/{idCard}/{university}/{major}/{photo}/{note}/{className}")
+    @ResponseBody
+    public int toUpdateStudent(@PathVariable("stuId")String stuId,@PathVariable("job")String job,@PathVariable("jobtime")String jobtime,@PathVariable("deptName")String deptName,@PathVariable("state")String state,
+                               @PathVariable("stuName")String stuName,@PathVariable("sex")String sex,@PathVariable("nation")String nation,@PathVariable("birthday")String birthday,@PathVariable("birthplace")String birthplace,
+                               @PathVariable("marry")String marry,@PathVariable("telephone")String telephone,@PathVariable("idCard")String idCard,@PathVariable("university")String university,@PathVariable("major")String major,
+                               @PathVariable("photo")String photo,@PathVariable("note")String note,@PathVariable("className")String className){
+        if("null".equals(job)){
+            job=null;
+        }
+        if("null".equals(jobtime)){
+            jobtime=null;
+        }
+        if("null".equals(deptName)){
+            deptName=null;
+        }
+        if("null".equals(photo)){
+            photo=null;
+        }
+        if("null".equals(note)){
+            note=null;
+        }
+        int stuId2=Integer.parseInt(stuId);
+        int state2=Integer.parseInt(state);
+        Student student=new Student(stuId2,stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,state2,className,deptName,job,jobtime);
+        int num=iStudentService.updateStudent(student);
+        return num;
+    }
     /**
      * @Author: zhangyingjie
      * @Description:删除单条学生信息
      * @Date:17:37 2020/11/3
      */
-//    @RequestMapping("/toDelStudent")
-//    @ResponseBody
-//    public List<Map<String,Object>> toDelStudent(@PathVariable("nameStr")String nameStr){
-//        List<Course> courses = courseService.list();
-//        return iStudentService.getStudents2(courses,nameStr);
-//    }
+    @RequestMapping("/toDelStudent/{stuId}")
+    @ResponseBody
+    public int toDelStudent(@PathVariable("stuId")String stuId){
+        int stuId2=Integer.parseInt(stuId);
+        int num=iStudentService.delStudent(stuId2);
+        return num;
+    }
     /**
      * @Author: zhangyingjie
      * @Description:批量删除学生信息
      * @Date:17:37 2020/11/3
      */
-//    @RequestMapping("/toDelStudents")
-//    @ResponseBody
-//    public List<Map<String,Object>> toDelStudents(@PathVariable("nameStr")String nameStr){
-//        List<Course> courses = courseService.list();
-//        return iStudentService.getStudents2(courses,nameStr);
-//    }
+    @RequestMapping("/toDelStudents/{stuIds}")
+    @ResponseBody
+    public int toDelStudents(@PathVariable("stuIds")String[] stuIds){
+        Integer[] ids = new Integer[stuIds.length];
+        for(int i = 0;i<stuIds.length;i++) {
+            ids[i] = Integer.parseInt(stuIds[i]);
+        }
+        List<Integer> idsToList= Arrays.asList(ids);
+        int num=iStudentService.delStudents(idsToList);
+        return num;
+    }
 }
