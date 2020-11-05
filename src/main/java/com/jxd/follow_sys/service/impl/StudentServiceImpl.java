@@ -55,7 +55,7 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
             iStudentMapper.addStudent(student);
             int num=student.getStuId();
             iStudentMapper.addStudentToScore(num);
-            iStudentMapper.addStuToSchool(num);
+//            iStudentMapper.addStuToSchool(num);
             iStudentMapper.addStuToJob(num);
             result = true;
         } catch (Exception e) {
@@ -67,10 +67,6 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
 
     public int addStudentToScore(int stuId) {
         return iStudentMapper.addStudentToScore(stuId);
-    }
-
-    public int addStuToSchool(int stuId) {
-        return iStudentMapper.addStuToSchool(stuId);
     }
 
     public int addStuToJob(int stuId) {

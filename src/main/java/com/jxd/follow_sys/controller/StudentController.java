@@ -5,10 +5,7 @@ import com.jxd.follow_sys.model.Student;
 import com.jxd.follow_sys.service.ICourseService;
 import com.jxd.follow_sys.service.IStudentService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -143,30 +140,9 @@ public class StudentController {
      * @Description:编辑学生
      * @Date:17:36 2020/11/3
      */
-    @RequestMapping("/toUpdateStudent/{stuId}/{job}/{jobtime}/{deptName}/{state}/{stuName}/{sex}/{nation}/{birthday}/{birthplace}/{marry}/{telephone}/{idCard}/{university}/{major}/{photo}/{note}/{className}")
+    @RequestMapping("/toUpdateStudent")
     @ResponseBody
-    public int toUpdateStudent(@PathVariable("stuId")String stuId,@PathVariable("job")String job,@PathVariable("jobtime")String jobtime,@PathVariable("deptName")String deptName,@PathVariable("state")String state,
-                               @PathVariable("stuName")String stuName,@PathVariable("sex")String sex,@PathVariable("nation")String nation,@PathVariable("birthday")String birthday,@PathVariable("birthplace")String birthplace,
-                               @PathVariable("marry")String marry,@PathVariable("telephone")String telephone,@PathVariable("idCard")String idCard,@PathVariable("university")String university,@PathVariable("major")String major,
-                               @PathVariable("photo")String photo,@PathVariable("note")String note,@PathVariable("className")String className){
-        if("null".equals(job)){
-            job=null;
-        }
-        if("null".equals(jobtime)){
-            jobtime=null;
-        }
-        if("null".equals(deptName)){
-            deptName=null;
-        }
-        if("null".equals(photo)){
-            photo=null;
-        }
-        if("null".equals(note)){
-            note=null;
-        }
-        int stuId2=Integer.parseInt(stuId);
-        int state2=Integer.parseInt(state);
-        Student student=new Student(stuId2,stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,state2,className,deptName,job,jobtime);
+    public int toUpdateStudent(@RequestBody Student student){
         int num=iStudentService.updateStudent(student);
         return num;
     }
