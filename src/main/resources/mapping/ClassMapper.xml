@@ -23,7 +23,7 @@
     </delete>
 <!--    修改班级信息-->
     <update id="updateClass">
-        update class set className=#{className},userId=#{userId}
+        update class set className=#{className},userId=#{userId} where classId=#{classId}
     </update>
 <!--    分页-->
     <select id="getClasses" resultType="map">
@@ -51,7 +51,7 @@
         </where>
     </select>
 <!--    获取全部的课程名称-->
-    <select id="getCourseName" resultType="String">
-        select courseName from course where flag !=0
+    <select id="getCourseName" resultType="map">
+        select courseId,courseName from course where flag !=0
     </select>
 </mapper>

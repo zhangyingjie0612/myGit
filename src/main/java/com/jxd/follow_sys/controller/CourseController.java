@@ -17,14 +17,5 @@ import javax.annotation.Resource;
  */
 @Controller
 public class CourseController {
-//    @Resource
-//    ICourseService iCourseService;
-//
-//    @RequestMapping("/test")
-//    @ResponseBody
-//    public String test(){
-//        String str="success";
-//
-//        return str;
-//    }
+
 }

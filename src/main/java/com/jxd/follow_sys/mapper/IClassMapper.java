@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface IClassMapper {
     //新增班期信息
-    int addClass(Classes classes);
+    boolean addClass(Classes classes);
     //向classcourse表里添加该班级对应的课程信息
-    int addClassCourse(List<ClassCourse> classCourse);
+    boolean addClassCourse(List<ClassCourse> classCourse);
     //删除班级对应的课程的信息
     int delClassCourse(int classId);
     //修改班级信息
@@ -28,5 +28,5 @@ public interface IClassMapper {
     List<Map<String,Object>> getClasses(@Param("counts")Integer counts, @Param("pageSize")Integer pageSize,@Param("nameStr")String nameStr,@Param("className")String className);
     List<Map<String,Object>> getClassesNum(@Param("nameStr")String nameStr,@Param("className")String className);
     //获取课程名称
-    List<String> getCourseName();
+    List<Map<String,Object>> getCourseName();
 }

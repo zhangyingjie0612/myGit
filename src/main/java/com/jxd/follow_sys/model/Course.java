@@ -20,6 +20,11 @@ public class Course {
     public Course() {
     }
 
+    public Course(int courseId, String coursename) {
+        this.courseId = courseId;
+        this.coursename = coursename;
+    }
+
     public Course(int courseId, String coursename, int flag) {
         this.courseId = courseId;
         this.coursename = coursename;

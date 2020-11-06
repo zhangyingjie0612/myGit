@@ -6,8 +6,10 @@ import com.jxd.follow_sys.model.Classes;
 import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.service.IClassService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +25,11 @@ public class ClassServiceImpl implements IClassService {
     @Resource
     IClassMapper iClassMapper;
 
-    public int addClass(Classes classes) {
+    public boolean addClass(Classes classes) {
         return iClassMapper.addClass(classes);
     }
 
-    public int addClassCourse(List<ClassCourse> classCourse) {
+    public boolean addClassCourse(List<ClassCourse> classCourse) {
         return iClassMapper.addClassCourse(classCourse);
     }
 
@@ -47,7 +49,7 @@ public class ClassServiceImpl implements IClassService {
         return iClassMapper.getClassesNum(nameStr,className);
     }
 
-    public List<String> getCourseName() {
+    public List<Map<String,Object>> getCourseName() {
         return iClassMapper.getCourseName();
     }
 }

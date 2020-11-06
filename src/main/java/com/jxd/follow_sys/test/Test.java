@@ -41,6 +41,5 @@ public class Test {
 //        for(Map map:list){
 //            System.out.println(map.get("sex"));
 //        }
-
     }
 }

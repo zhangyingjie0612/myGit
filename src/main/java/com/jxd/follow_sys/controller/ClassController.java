@@ -1,13 +1,17 @@
 package com.jxd.follow_sys.controller;
 
+import com.jxd.follow_sys.model.ClassCourse;
+import com.jxd.follow_sys.model.Classes;
+import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.service.IClassService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,43 +51,55 @@ public class ClassController {
     /**
      * @Author: zhangyingjie
      * @Description:向class表里添加班期信息
-     * @Date:15:47 2020/11/5
-     */
-//    @RequestMapping("/toGetClassName")
-//    @ResponseBody
-//    public List<Map<String,Object>> toGetClassName(){
-//        return iStudentService.getAllClassName();
-//    }
-    /**
-     * @Author: zhangyingjie
      * @Description:向classcourse表里添加该班级对应的课程信息
      * @Date:15:47 2020/11/5
      */
-//    @RequestMapping("/toGetClassName")
-//    @ResponseBody
-//    public List<Map<String,Object>> toGetClassName(){
-//        return iStudentService.getAllClassName();
-//    }
+    @RequestMapping("/toAddClass/{className}/{userId}")
+    @ResponseBody
+    public int toAddClass(@PathVariable("className")String className,
+                              @PathVariable("userId")String userId){
+        int userId2=Integer.parseInt(userId);
+        Classes classes=new Classes(className,userId2);
+        iClassService.addClass(classes);
+        int cId=classes.getClassId();
+        //批量新增对应课程信息
+        return cId;
+    }
+    @RequestMapping("/toAddClassCourse")
+    @ResponseBody
+    public boolean toAddClassCourse(@RequestBody List<ClassCourse> classCourse){
+        boolean flag=false;
+        if(iClassService.addClassCourse(classCourse)){
+            flag=true;
+        }
+        return flag;
+    }
     /**
      * @Author: zhangyingjie
-     * @Description:删除班级对应的课程的信息
+     * @Description:修改班级信息/课程（删除班级对应的课程的信息，新增）
      * @Date:15:47 2020/11/5
      */
-//    @RequestMapping("/toGetClassName")
-//    @ResponseBody
-//    public List<Map<String,Object>> toGetClassName(){
-//        return iStudentService.getAllClassName();
-//    }
-    /**
-     * @Author: zhangyingjie
-     * @Description:修改班级信息
-     * @Date:15:47 2020/11/5
-     */
-//    @RequestMapping("/toGetClassName")
-//    @ResponseBody
-//    public List<Map<String,Object>> toGetClassName(){
-//        return iStudentService.getAllClassName();
-//    }
+    @RequestMapping("/toUpdateClasses/{classId}/{className}/{userId}")
+    @ResponseBody
+    @Transactional(rollbackFor=Exception.class)//事务
+    public boolean toUpdateClasses(@PathVariable("classId")String classId,
+                               @PathVariable("className")String className,
+                               @PathVariable("userId")String userId){
+        boolean flag=false;
+        int classId2=Integer.parseInt(classId);
+        int userId2=Integer.parseInt(userId);
+        try {
+            Classes classes=new Classes(classId2,className,userId2);
+            int num=iClassService.updateClass(classes);//更新班级信息
+            //删除课程信息
+            iClassService.delClassCourse(classId2);
+        } catch (Exception e) {
+            //事务回滚异常需要抛出来
+            throw e;
+        }
+        return flag;
+    }
+
     /**
      * @Author: zhangyingjie
      * @Description:获取全部的课程名称
@@ -100,7 +116,8 @@ public class ClassController {
 //    }
     @RequestMapping("/getAllCourseName")
     @ResponseBody
-    public List<String> getAllCourseName(){
-        return iClassService.getCourseName();
+    public List<Map<String,Object>> getAllCourseName(){
+        List<Map<String,Object>> a = iClassService.getCourseName();
+        return a;
     }
 }

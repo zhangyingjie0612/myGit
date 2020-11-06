@@ -15,6 +15,6 @@
     </update>
     <!--    查询所有的教师姓名-->
     <select id="getAllTeacherName" resultType="map">
-        select userName from user where roleId=1
+        select userName,userId from user where roleId=1
     </select>
 </mapper>
