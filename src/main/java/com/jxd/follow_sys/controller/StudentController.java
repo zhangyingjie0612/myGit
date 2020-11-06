@@ -26,6 +26,17 @@ public class StudentController {
     IStudentService iStudentService;
     @Resource
     ICourseService courseService;
+
+    /**
+     * @Author: zhangyingjie
+     * @Description:将动态表头的prop和label封装
+     * @Date:15:47 2020/11/6
+     */
+    @RequestMapping("/toDoGetAllCourses/{className}")
+    @ResponseBody
+    public List<Map<String,Object>> toDoGetAllCourses(@PathVariable("className")String className){
+        return iStudentService.toGetAllCourse(className);
+    }
     /**
      * @Author: zhangyingjie
      * @Description:管理员看到的学员跟踪表

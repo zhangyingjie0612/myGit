@@ -23,11 +23,11 @@ import java.util.Map;
 public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> implements IStudentService {
     @Resource
     IStudentMapper iStudentMapper;
-    /**
-     * @Author: zhangyingjie
-     * @Description:管理员看到的学员跟踪表
-     * @Date:14:42 2020/10/31
-     */
+
+    public List<Map<String, Object>> toGetAllCourse(String className) {
+        return iStudentMapper.toGetAllCourse(className);
+    }
+
     public List<Map<String, Object>> getStudents(List<Course> courseId,String nameStr,String className,Integer counts, Integer pageSize) {
         return iStudentMapper.getStudents(courseId,nameStr,className,counts,pageSize);
     }

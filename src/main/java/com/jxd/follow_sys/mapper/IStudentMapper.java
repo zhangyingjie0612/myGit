@@ -16,6 +16,8 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface IStudentMapper extends BaseMapper<Student> {
+    //封装动态表头的prop和label
+    List<Map<String,Object>> toGetAllCourse(@Param("className")String className);
     //管理员看到的学员跟踪表
     List<Map<String,Object>> getStudents(@Param("list")List<Course> courseId, @Param("nameStr")String nameStr,@Param("className")String className,@Param("counts")Integer counts,
                                          @Param("pageSize")Integer pageSize);
