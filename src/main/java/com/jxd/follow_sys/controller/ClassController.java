@@ -1,14 +1,10 @@
 package com.jxd.follow_sys.controller;
 
-import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
 import com.jxd.follow_sys.service.IClassService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -64,9 +60,9 @@ public class ClassController {
         //批量新增对应课程信息
         return cId;
     }
-    @RequestMapping("/toAddClassCourse")
+    @RequestMapping(value = "/toAddClassCourse",produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public boolean toAddClassCourse(@RequestBody List<ClassCourse> classCourse){
+    public boolean toAddClassCourse(@RequestBody List<String> classCourse){
         boolean flag=false;
         if(iClassService.addClassCourse(classCourse)){
             flag=true;
@@ -92,6 +88,7 @@ public class ClassController {
             int num=iClassService.updateClass(classes);//更新班级信息
             //删除课程信息
             iClassService.delClassCourse(classId2);
+            flag=true;
         } catch (Exception e) {
             //事务回滚异常需要抛出来
             throw e;
@@ -104,19 +101,30 @@ public class ClassController {
      * @Description:获取全部的课程名称
      * @Date:18:58 2020/11/5
      */
-//    @RequestMapping("/getAllCourseName")
-//    @ResponseBody
-//    public String[] getAllCourseName(){
-//        String[] strings=new String[iClassService.getCourseName().size()];
-//        for(int i=0;i<strings.length;i++){
-//            strings[i]= iClassService.getCourseName().get(i);
-//        }
-//        return strings;
-//    }
     @RequestMapping("/getAllCourseName")
     @ResponseBody
     public List<Map<String,Object>> getAllCourseName(){
         List<Map<String,Object>> a = iClassService.getCourseName();
         return a;
+    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:得到最大的班期id
+     * @Date:15:32 2020/11/7
+     */
+    @RequestMapping("/toGetMaxClassId")
+    @ResponseBody
+    public int toGetMaxClassId(){
+        return iClassService.getMaxClassId();
+    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:获取班期的选课课程
+     * @Date:16:04 2020/11/7
+     */
+    @RequestMapping("/toGetSelectedCourse/{className}")
+    @ResponseBody
+    public String[] toGetSelectedCourse(@PathVariable("className")String className){
+        return iClassService.getSelectedCourse(className);
     }
 }

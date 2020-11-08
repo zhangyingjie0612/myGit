@@ -1,8 +1,6 @@
 package com.jxd.follow_sys.mapper;
 
-import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
-import com.jxd.follow_sys.model.Course;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,7 +17,7 @@ public interface IClassMapper {
     //新增班期信息
     boolean addClass(Classes classes);
     //向classcourse表里添加该班级对应的课程信息
-    boolean addClassCourse(List<ClassCourse> classCourse);
+    boolean addClassCourse(List<String> classCourse);
     //删除班级对应的课程的信息
     int delClassCourse(int classId);
     //修改班级信息
@@ -29,4 +27,8 @@ public interface IClassMapper {
     List<Map<String,Object>> getClassesNum(@Param("nameStr")String nameStr,@Param("className")String className);
     //获取课程名称
     List<Map<String,Object>> getCourseName();
+    //获取最大的classId
+    Integer getMaxClassId();
+    //获取班期的选课课程
+    String[] getSelectedCourse(String className);
 }

@@ -29,7 +29,7 @@ public class ClassServiceImpl implements IClassService {
         return iClassMapper.addClass(classes);
     }
 
-    public boolean addClassCourse(List<ClassCourse> classCourse) {
+    public boolean addClassCourse(List<String> classCourse) {
         return iClassMapper.addClassCourse(classCourse);
     }
 
@@ -51,5 +51,13 @@ public class ClassServiceImpl implements IClassService {
 
     public List<Map<String,Object>> getCourseName() {
         return iClassMapper.getCourseName();
+    }
+
+    public Integer getMaxClassId() {
+        return iClassMapper.getMaxClassId();
+    }
+
+    public String[] getSelectedCourse(String className) {
+        return iClassMapper.getSelectedCourse(className);
     }
 }

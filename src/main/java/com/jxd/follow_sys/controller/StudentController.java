@@ -91,8 +91,7 @@ public class StudentController {
         System.out.println("ajax文件上传");
         //上传的位置
 
-        String path = "C:\\Users\\Administrator\\Desktop\\vuedemo\\vuedemo48\\static\\imgs";
-//        String path = "F:\\springmvc\\";
+        String path = "E:\\vueProjects\\follow_sys\\static\\imgs";
         System.out.println("path:"+path);
         //判断，该路径是否存在
         File file =new File(path);
@@ -112,19 +111,6 @@ public class StudentController {
         upload.transferTo(newFile);
         //返回文件名
         return filename;
-    }
-    @RequestMapping("/savephoto/{imgPath}")
-    @ResponseBody
-    public boolean changeTeacherPwd(@PathVariable("imgPath") String imgPath){
-        boolean flag =false;
-        String path = "../../static/imgs/";
-        String photo = path+imgPath;
-//        Student teacher=new Student(16,"userName","pwd","sex","telephone","phone","213","email",
-//                1,"1997-03-07",1,1,photo);
-//        if(iStudentService.updateTeacher(teacher)>0){
-//            flag=true;
-//        }
-        return flag;
     }
     /**
      * @Author: zhangyingjie
@@ -153,10 +139,10 @@ public class StudentController {
         if("null".equals(note)){
             note=null;
         }
-        if("null".equals(photo)){
-            photo=null;
-        }
+        String path = "../../static/imgs/";
         Student student=new Student(stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className);
+        String photo2 = path+student.getPhoto();
+        student.setPhoto(photo2);
         if(iStudentService.addStudent(student)){
             flag=true;
         }
@@ -170,6 +156,9 @@ public class StudentController {
     @RequestMapping("/toUpdateStudent")
     @ResponseBody
     public int toUpdateStudent(@RequestBody Student student){
+        String path = "../../static/imgs/";
+        String photo = path+student.getPhoto();
+        student.setPhoto(photo);
         int num=iStudentService.updateStudent(student);
         return num;
     }
