@@ -85,7 +85,7 @@ public class StudentController {
      * @Description:上传学生头像
      * @Date:17:09 2020/11/2
      */
-    @RequestMapping("/up")
+    @RequestMapping("/upload")
     @ResponseBody
     public String doUP(@RequestParam("picture") MultipartFile upload)throws Exception{
         System.out.println("ajax文件上传");
