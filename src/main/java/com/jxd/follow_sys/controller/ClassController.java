@@ -1,12 +1,16 @@
 package com.jxd.follow_sys.controller;
 
+import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
 import com.jxd.follow_sys.service.IClassService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,11 +64,22 @@ public class ClassController {
         //批量新增对应课程信息
         return cId;
     }
-    @RequestMapping(value = "/toAddClassCourse",produces = "application/json;charset=UTF-8")
+    @RequestMapping("/toAddClassCourse")
     @ResponseBody
-    public boolean toAddClassCourse(@RequestBody List<String> classCourse){
+    public boolean toAddClassCourse(@RequestBody String classCourse){
         boolean flag=false;
-        if(iClassService.addClassCourse(classCourse)){
+        JSONArray jsonArray = JSONArray.fromObject(classCourse);
+        List<ClassCourse> list = new ArrayList<>();
+        if (jsonArray.size()>0){
+            for (int i = 0;i<jsonArray.size();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Integer classId = (Integer) jsonObject.get("classId");
+                Integer courseId = (Integer) jsonObject.get("courseId");
+                ClassCourse classCourse1=new ClassCourse(classId,courseId);
+                list.add(classCourse1);
+            }
+        }
+        if(iClassService.addClassCourse(list)){
             flag=true;
         }
         return flag;

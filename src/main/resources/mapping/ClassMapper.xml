@@ -6,7 +6,7 @@
 <mapper namespace="com.jxd.follow_sys.mapper.IClassMapper">
 <!--    向class表里添加班期信息-->
     <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="id"赋值给实体类的id属性-->
-    <insert id="addClass" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addClass" useGeneratedKeys="true" keyProperty="classId">
         insert into class(className,userId) values (#{className},#{userId})
     </insert>
 <!--    向classcourse表里添加该班级对应的课程信息-->

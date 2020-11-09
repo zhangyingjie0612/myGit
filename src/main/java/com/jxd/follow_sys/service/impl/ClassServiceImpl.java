@@ -29,7 +29,7 @@ public class ClassServiceImpl implements IClassService {
         return iClassMapper.addClass(classes);
     }
 
-    public boolean addClassCourse(List<String> classCourse) {
+    public boolean addClassCourse(List<ClassCourse> classCourse) {
         return iClassMapper.addClassCourse(classCourse);
     }
 

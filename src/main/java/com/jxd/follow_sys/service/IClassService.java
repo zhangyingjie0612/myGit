@@ -2,8 +2,6 @@ package com.jxd.follow_sys.service;
 
 import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
-import com.jxd.follow_sys.model.Course;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,7 @@ public interface IClassService {
     //新增班期信息
     boolean addClass(Classes classes);
     //向classcourse表里添加该班级对应的课程信息
-    boolean addClassCourse(List<String> classCourse);
+    boolean addClassCourse(List<ClassCourse> classCourse);
     //删除班级对应的课程的信息
     int delClassCourse(int classId);
     //修改班级信息
