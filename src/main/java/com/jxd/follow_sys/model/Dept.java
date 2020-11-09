@@ -15,17 +15,15 @@ public class Dept {
     @TableId("deptId")
     private int deptId;//主键，部门id
     private String deptName;//部门名称
+    private int flag;//假删
 
     public Dept() {
     }
 
-    public Dept(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public Dept(int deptId, String deptName) {
+    public Dept(int deptId, String deptName, int flag) {
         this.deptId = deptId;
         this.deptName = deptName;
+        this.flag = flag;
     }
 
     public int getDeptId() {
@@ -42,5 +40,13 @@ public class Dept {
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

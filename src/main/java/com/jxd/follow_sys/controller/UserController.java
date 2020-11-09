@@ -27,18 +27,19 @@ public class UserController {
      * @Description:查询用户密码列表
      * @Date:19:09 2020/11/2
      */
-    @RequestMapping("/getUser/{curPage}/{pageSize}")
+    @RequestMapping("/getUser/{curPage}/{pageSize}/{nameStr}")
     @ResponseBody
     public List<Map<String,Object>> getUser(@PathVariable("curPage")String curPage,
-                                               @PathVariable("pageSize")String pageSize){
+                                            @PathVariable("pageSize")String pageSize,
+                                            @PathVariable("nameStr")String nameStr){
         Integer counts=(Integer.parseInt(curPage)-1)*Integer.parseInt(pageSize);
-        List<Map<String,Object>> list=iUserService.getUserPwd(counts,Integer.parseInt(pageSize));
+        List<Map<String,Object>> list=iUserService.getUserPwd(counts,Integer.parseInt(pageSize),nameStr);
         return list;
     }
-    @RequestMapping("/getUser2")
+    @RequestMapping("/getUser2/{nameStr}")
     @ResponseBody
-    public List<Map<String,Object>> getUser2(){
-        return iUserService.getUserPwd2();
+    public List<Map<String,Object>> getUser2(@PathVariable("nameStr")String nameStr){
+        return iUserService.getUserPwd2(nameStr);
     }
     /**
      * @Author: zhangyingjie

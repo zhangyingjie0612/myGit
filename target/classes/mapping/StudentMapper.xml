@@ -143,4 +143,8 @@
             #{stuId}
         </foreach>
     </update>
+<!--    查询所有的部门名称，flag=1的-->
+    <select id="getAllDeptName" resultType="map">
+        select deptName from dept where flag=1
+    </select>
 </mapper>

@@ -52,7 +52,7 @@
     </select>
 <!--    获取全部的课程名称-->
     <select id="getCourseName" resultType="map">
-        select courseId,courseName from course where flag !=0
+        select courseId,courseName from course where flag =1
     </select>
 <!--    获取最大的班期id-->
     <select id="getMaxClassId" resultType="Integer">

@@ -41,4 +41,6 @@ public interface IStudentService extends IService<Student> {
     int delStudent(int stuId);
     //批量删除学生
     int delStudents(List<Integer> ids);
+    //查询所有的部门名称
+    List<Map<String,Object>> getAllDeptName();
 }

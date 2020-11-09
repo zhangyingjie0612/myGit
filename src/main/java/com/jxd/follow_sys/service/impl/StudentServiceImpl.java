@@ -84,4 +84,8 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
     public int delStudents(List<Integer> ids) {
         return iStudentMapper.delStudents(ids);
     }
+
+    public List<Map<String, Object>> getAllDeptName() {
+        return iStudentMapper.getAllDeptName();
+    }
 }

@@ -139,6 +139,9 @@ public class StudentController {
         if("null".equals(note)){
             note=null;
         }
+        if("null".equals(photo)){
+            photo="null.jpg";
+        }
         String path = "../../static/imgs/";
         Student student=new Student(stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className);
         String photo2 = path+student.getPhoto();
@@ -189,5 +192,15 @@ public class StudentController {
         List<Integer> idsToList= Arrays.asList(ids);
         int num=iStudentService.delStudents(idsToList);
         return num;
+    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:得到所有的部门名称
+     * @Date:17:33 2020/11/9
+     */
+    @RequestMapping("/toGetAllDeptName")
+    @ResponseBody
+    public List<Map<String,Object>> toGetAllDeptName(){
+        return iStudentService.getAllDeptName();
     }
 }
