@@ -130,20 +130,14 @@ public class StudentController {
      * @Description:返回新增学生的主键向工作评价表中插入
      * @Date:17:35 2020/11/3
      */
-    @RequestMapping("/toAddStudent/{stuName}/{sex}/{nation}/{birthday}/{birthplace}/{marry}/{telephone}/{idcard}/{university}/{major}/{photo}/{note}/{className}")
+    @RequestMapping("/toAddStudent")
     @ResponseBody
-    public boolean toAddStudent(@PathVariable("stuName")String stuName,@PathVariable("sex")String sex,@PathVariable("nation")String nation,@PathVariable("birthday")String birthday,@PathVariable("birthplace")String birthplace,
-                                @PathVariable("marry")String marry,@PathVariable("telephone")String telephone,@PathVariable("idcard")String idCard,@PathVariable("university")String university,@PathVariable("major")String major,
-                                @PathVariable("photo")String photo,@PathVariable("note")String note,@PathVariable("className")String className){
+    public boolean toAddStudent(@RequestBody Student student){
         boolean flag=false;
-        if("null".equals(note)){
-            note=null;
-        }
-        if("null".equals(photo)){
-            photo="null.jpg";
-        }
         String path = "../../static/imgs/";
-        Student student=new Student(stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className);
+        if("".equals(student.getPhoto())){
+            student.setPhoto("null.jpg");
+        }
         String photo2 = path+student.getPhoto();
         student.setPhoto(photo2);
         if(iStudentService.addStudent(student)){
