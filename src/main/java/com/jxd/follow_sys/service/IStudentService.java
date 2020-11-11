@@ -15,6 +15,8 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface IStudentService extends IService<Student> {
+    //封装动态表头的prop和label
+    List<Map<String,Object>> toGetAllCourse(String className);
     //管理员看到的学员跟踪表
     List<Map<String,Object>> getStudents(List<Course> courseId,String nameStr,String className,Integer counts, Integer pageSize);
     List<Map<String,Object>> getStudents2(List<Course> courseId,String nameStr,String className);
@@ -39,4 +41,6 @@ public interface IStudentService extends IService<Student> {
     int delStudent(int stuId);
     //批量删除学生
     int delStudents(List<Integer> ids);
+    //查询所有的部门名称
+    List<Map<String,Object>> getAllDeptName();
 }

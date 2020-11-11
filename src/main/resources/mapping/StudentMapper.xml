@@ -4,22 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
 <mapper namespace="com.jxd.follow_sys.mapper.IStudentMapper">
-<!--    封装prop和label-->
-    <select id="" resultType="map">
-        select courseid as prop,c.coursename as label from course c
-        where courseid in (
-        select courseId from classcourse
+    <!--    封装prop和label-->
+    <select id="toGetAllCourse" resultType="map">
+        select o.courseid prop,o.courseName label from course o join (select cc.courseId,className from classcourse cc
+        join class s on s.classid=cc.classid
         <where>
-            classid = #{classid}
+            className=#{className}
         </where>
-        )
-        ORDER BY courseId
+        ) m on m.courseId=o.courseId
     </select>
     <select id="getStudents" resultType="java.util.HashMap">
-        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s
+        left join
         (select stuid
         <foreach collection="list" item="course" open="," separator=",">
-        sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
+            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
         </foreach>
         from score
         group by stuid)m on s.stuid=m.stuid
@@ -28,13 +27,13 @@
                 s.className=#{className}
             </if>
         </where>
-        ) a left join (select m.evlcontent,x.* from school_evl m join (
-        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
+        ) a left join (select m.evlScore,x.* from school_evl m join (
+        select j.stuid,y1.sumScore s1,y2.sumScore s2,y3.sumScore s3,y4.sumScore s4
         from job_evaluation j
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
         group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
         <where>
             state!=4
@@ -45,7 +44,8 @@
         limit #{counts},#{pageSize}
     </select>
     <select id="getStudents2" resultType="java.util.HashMap">
-        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s
+        left join
         (select stuid
         <foreach collection="list" item="course" open="," separator=",">
             sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
@@ -58,13 +58,13 @@
                 and s.className=#{className}
             </if>
         </where>
-        ) a left join (select m.evlcontent,x.* from school_evl m join (
-        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
+        ) a left join (select m.evlScore,x.* from school_evl m join (
+        select j.stuid,y1.sumScore s1,y2.sumScore s2,y3.sumScore s3,y4.sumScore s4
         from job_evaluation j
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
         group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
         <where>
             <if test="nameStr!='all'">
@@ -103,44 +103,44 @@
             </if>
         </where>
     </select>
-<!--    查询所有部门名称-->
+    <!--    查询所有班期名称-->
     <select id="getAllClassName" resultType="map">
         select className from class
     </select>
-<!--    向学生表插入信息-->
+    <!--    向学生表插入信息-->
     <!--    useGeneratedKeys="true"表名返回自增的主键的值，keyProperty="stuId"赋值给实体类的stuId属性-->
     <insert id="addStudent" useGeneratedKeys="true" keyProperty="stuId">
         insert into student(stuId,stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className)
         values (null,#{stuName},#{sex},#{nation},#{birthday},#{birthplace},#{marry},#{telephone},
         #{idCard},#{university},#{major},#{photo},#{note},#{className})
     </insert>
-<!--    向分数表中插入学生Id-->
+    <!--    向分数表中插入学生Id-->
     <insert id="addStudentToScore">
         insert into score(stuId) values (#{stuId})
     </insert>
-<!--    向学校评价school_evl表里插入学生id-->
-<!--    <insert id="addStuToSchool">-->
-<!--        insert into school_evl(stuId) values (#{stuId})-->
-<!--    </insert>-->
-<!--    向job_evaluation工作评价表里插入学生id-->
+    <!--    向job_evaluation工作评价表里插入学生id-->
     <insert id="addStuToJob">
         insert into job_evaluation(stuId) values (#{stuId})
     </insert>
-<!--    编辑学生-->
+    <!--    编辑学生-->
     <update id="updateStudent">
         update student set stuname=#{stuName},sex=#{sex},nation=#{nation},birthday=#{birthday},birthplace=#{birthplace},
         marry=#{marry},telephone=#{telephone},idCard=#{idCard},university=#{university},major=#{major},photo=#{photo},
         note=#{note},state=#{state},className=#{className},deptName=#{deptName},job=#{job},jobtime=#{jobtime} where stuId=#{stuId}
     </update>
-<!--    删除学生，状态变为4-->
+    <!--    删除学生，状态变为4-->
     <update id="delStudent">
         update student set state=4 where stuId=#{stuId}
     </update>
-<!--    批量删除学生，批量修改状态为4-->
+    <!--    批量删除学生，批量修改状态为4-->
     <update id="delStudents">
         update student set state=4 where stuId in
         <foreach collection="list" item="stuId" open="(" close=")" separator=",">
             #{stuId}
         </foreach>
     </update>
+<!--    查询所有的部门名称，flag=1的-->
+    <select id="getAllDeptName" resultType="map">
+        select deptName from dept where flag=1
+    </select>
 </mapper>

@@ -17,8 +17,8 @@ public interface IUserService extends IService<User> {
     //重置密码
     int gotoResetPwd(int userId);
     //查询用户信息
-    List<Map<String,Object>> getUserPwd(Integer counts,Integer pageSize);
-    List<Map<String,Object>> getUserPwd2();
+    List<Map<String,Object>> getUserPwd(Integer counts,Integer pageSize,String nameStr);
+    List<Map<String,Object>> getUserPwd2(String nameStr);
     //查询授课老师列表
     List<Map<String,Object>> getAllTeacherName();
 }

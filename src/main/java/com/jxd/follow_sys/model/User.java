@@ -17,7 +17,7 @@ public class User {
     private String userName;
     private String pwd;
     private String telephone;
-    private String phone;
+    private String idcard;
     private String email;
     private String note;
     private int flag;
@@ -30,13 +30,13 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String userName, String pwd, String telephone, String phone, String email, String note,
+    public User(int userId, String userName, String pwd, String telephone, String idcard, String email, String note,
                 int flag, String birthday, int deptNo, int roleId) {
         this.userId = userId;
         this.userName = userName;
         this.pwd = pwd;
         this.telephone = telephone;
-        this.phone = phone;
+        this.idcard = idcard;
         this.email = email;
         this.note = note;
         this.flag = flag;
@@ -45,13 +45,13 @@ public class User {
         this.roleId = roleId;
     }
 
-    public User(int userId, String userName, String pwd, String telephone, String phone, String email, String note,
+    public User(int userId, String userName, String pwd, String telephone, String idcard, String email, String note,
                 int flag, String birthday, int deptNo, int roleId, String photo, String sex) {
         this.userId = userId;
         this.userName = userName;
         this.pwd = pwd;
         this.telephone = telephone;
-        this.phone = phone;
+        this.idcard = idcard;
         this.email = email;
         this.note = note;
         this.flag = flag;
@@ -94,12 +94,12 @@ public class User {
         this.telephone = telephone;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getIdcard() {
+        return idcard;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 
     public String getEmail() {

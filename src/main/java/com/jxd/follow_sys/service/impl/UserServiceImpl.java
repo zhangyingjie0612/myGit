@@ -27,12 +27,12 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         return iUserMapper.gotoResetPwd(userId);
     }
 
-    public List<Map<String, Object>> getUserPwd(Integer counts, Integer pageSize) {
-        return iUserMapper.getUserPwd(counts,pageSize);
+    public List<Map<String, Object>> getUserPwd(Integer counts, Integer pageSize,String nameStr) {
+        return iUserMapper.getUserPwd(counts,pageSize,nameStr);
     }
 
-    public List<Map<String, Object>> getUserPwd2() {
-        return iUserMapper.getUserPwd2();
+    public List<Map<String, Object>> getUserPwd2(String nameStr) {
+        return iUserMapper.getUserPwd2(nameStr);
     }
 
     public List<Map<String, Object>> getAllTeacherName() {

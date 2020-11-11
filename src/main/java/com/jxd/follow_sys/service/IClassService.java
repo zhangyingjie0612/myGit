@@ -2,8 +2,6 @@ package com.jxd.follow_sys.service;
 
 import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
-import com.jxd.follow_sys.model.Course;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -29,4 +27,8 @@ public interface IClassService {
     List<Map<String,Object>> getClassesNum(String nameStr,String className);
     //获取课程名称
     List<Map<String,Object>> getCourseName();
+    //获取最大的classId
+    Integer getMaxClassId();
+    //获取班期的选课课程
+    String[] getSelectedCourse(String className);
 }

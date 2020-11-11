@@ -26,6 +26,17 @@ public class StudentController {
     IStudentService iStudentService;
     @Resource
     ICourseService courseService;
+
+    /**
+     * @Author: zhangyingjie
+     * @Description:将动态表头的prop和label封装
+     * @Date:15:47 2020/11/6
+     */
+    @RequestMapping("/toDoGetAllCourses/{className}")
+    @ResponseBody
+    public List<Map<String,Object>> toDoGetAllCourses(@PathVariable("className")String className){
+        return iStudentService.toGetAllCourse(className);
+    }
     /**
      * @Author: zhangyingjie
      * @Description:管理员看到的学员跟踪表
@@ -74,14 +85,13 @@ public class StudentController {
      * @Description:上传学生头像
      * @Date:17:09 2020/11/2
      */
-    @RequestMapping("/up")
+    @RequestMapping("/upload")
     @ResponseBody
     public String doUP(@RequestParam("picture") MultipartFile upload)throws Exception{
         System.out.println("ajax文件上传");
         //上传的位置
 
-        String path = "C:\\Users\\Administrator\\Desktop\\vuedemo\\vuedemo48\\static\\imgs";
-//        String path = "F:\\springmvc\\";
+        String path = "E:\\vueProjects\\follow_sys\\static\\imgs";
         System.out.println("path:"+path);
         //判断，该路径是否存在
         File file =new File(path);
@@ -102,19 +112,6 @@ public class StudentController {
         //返回文件名
         return filename;
     }
-    @RequestMapping("/savephoto/{imgPath}")
-    @ResponseBody
-    public boolean changeTeacherPwd(@PathVariable("imgPath") String imgPath){
-        boolean flag =false;
-        String path = "../../static/imgs/";
-        String photo = path+imgPath;
-//        Student teacher=new Student(16,"userName","pwd","sex","telephone","phone","213","email",
-//                1,"1997-03-07",1,1,photo);
-//        if(iStudentService.updateTeacher(teacher)>0){
-//            flag=true;
-//        }
-        return flag;
-    }
     /**
      * @Author: zhangyingjie
      * @Description:查询所有班级名称
@@ -133,19 +130,16 @@ public class StudentController {
      * @Description:返回新增学生的主键向工作评价表中插入
      * @Date:17:35 2020/11/3
      */
-    @RequestMapping("/toAddStudent/{stuName}/{sex}/{nation}/{birthday}/{birthplace}/{marry}/{telephone}/{idcard}/{university}/{major}/{photo}/{note}/{className}")
+    @RequestMapping("/toAddStudent")
     @ResponseBody
-    public boolean toAddStudent(@PathVariable("stuName")String stuName,@PathVariable("sex")String sex,@PathVariable("nation")String nation,@PathVariable("birthday")String birthday,@PathVariable("birthplace")String birthplace,
-                                @PathVariable("marry")String marry,@PathVariable("telephone")String telephone,@PathVariable("idcard")String idCard,@PathVariable("university")String university,@PathVariable("major")String major,
-                                @PathVariable("photo")String photo,@PathVariable("note")String note,@PathVariable("className")String className){
+    public boolean toAddStudent(@RequestBody Student student){
         boolean flag=false;
-        if("null".equals(note)){
-            note=null;
+        String path = "../../static/imgs/";
+        if("".equals(student.getPhoto())){
+            student.setPhoto("null.jpg");
         }
-        if("null".equals(photo)){
-            photo=null;
-        }
-        Student student=new Student(stuName,sex,nation,birthday,birthplace,marry,telephone,idCard,university,major,photo,note,className);
+        String photo2 = path+student.getPhoto();
+        student.setPhoto(photo2);
         if(iStudentService.addStudent(student)){
             flag=true;
         }
@@ -159,6 +153,9 @@ public class StudentController {
     @RequestMapping("/toUpdateStudent")
     @ResponseBody
     public int toUpdateStudent(@RequestBody Student student){
+        String path = "../../static/imgs/";
+        String photo = path+student.getPhoto();
+        student.setPhoto(photo);
         int num=iStudentService.updateStudent(student);
         return num;
     }
@@ -189,5 +186,15 @@ public class StudentController {
         List<Integer> idsToList= Arrays.asList(ids);
         int num=iStudentService.delStudents(idsToList);
         return num;
+    }
+    /**
+     * @Author: zhangyingjie
+     * @Description:得到所有的部门名称
+     * @Date:17:33 2020/11/9
+     */
+    @RequestMapping("/toGetAllDeptName")
+    @ResponseBody
+    public List<Map<String,Object>> toGetAllDeptName(){
+        return iStudentService.getAllDeptName();
     }
 }
