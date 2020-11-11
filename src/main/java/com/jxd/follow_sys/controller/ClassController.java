@@ -2,7 +2,6 @@ package com.jxd.follow_sys.controller;
 
 import com.jxd.follow_sys.model.ClassCourse;
 import com.jxd.follow_sys.model.Classes;
-import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.service.IClassService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

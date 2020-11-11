@@ -4,6 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
 <mapper namespace="com.jxd.follow_sys.mapper.IStudentMapper">
+<!--    封装prop和label-->
+    <select id="" resultType="map">
+        select courseid as prop,c.coursename as label from course c
+        where courseid in (
+        select courseId from classcourse
+        <where>
+            classid = #{classid}
+        </where>
+        )
+        ORDER BY courseId
+    </select>
     <select id="getStudents" resultType="java.util.HashMap">
         select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s left join
         (select stuid
