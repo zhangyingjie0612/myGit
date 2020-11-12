@@ -16,8 +16,9 @@ public class User {
     private int userId;
     private String userName;
     private String pwd;
+    private String sex;
     private String telephone;
-    private String idcard;
+    private String idCard;
     private String email;
     private String note;
     private int flag;
@@ -25,18 +26,18 @@ public class User {
     private int deptNo;
     private int roleId;
     private String photo;
-    private String sex;
+
 
     public User() {
     }
 
-    public User(int userId, String userName, String pwd, String telephone, String idcard, String email, String note,
+    public User(int userId, String userName, String pwd, String telephone, String idCard, String email, String note,
                 int flag, String birthday, int deptNo, int roleId) {
         this.userId = userId;
         this.userName = userName;
         this.pwd = pwd;
         this.telephone = telephone;
-        this.idcard = idcard;
+        this.idCard = idCard;
         this.email = email;
         this.note = note;
         this.flag = flag;
@@ -45,13 +46,28 @@ public class User {
         this.roleId = roleId;
     }
 
-    public User(int userId, String userName, String pwd, String telephone, String idcard, String email, String note,
+    public User(String userName, String pwd, String sex, String telephone, String idCard, String email, String note, int flag, String birthday, int deptNo, int roleId, String photo) {
+        this.userName = userName;
+        this.pwd = pwd;
+        this.sex = sex;
+        this.telephone = telephone;
+        this.idCard = idCard;
+        this.email = email;
+        this.note = note;
+        this.flag = flag;
+        this.birthday = birthday;
+        this.deptNo = deptNo;
+        this.roleId = roleId;
+        this.photo = photo;
+    }
+
+    public User(int userId, String userName, String pwd, String telephone, String idCard, String email, String note,
                 int flag, String birthday, int deptNo, int roleId, String photo, String sex) {
         this.userId = userId;
         this.userName = userName;
         this.pwd = pwd;
         this.telephone = telephone;
-        this.idcard = idcard;
+        this.idCard = idCard;
         this.email = email;
         this.note = note;
         this.flag = flag;
@@ -94,12 +110,12 @@ public class User {
         this.telephone = telephone;
     }
 
-    public String getIdcard() {
-        return idcard;
+    public String getidCard() {
+        return idCard;
     }
 
-    public void setIdcard(String idcard) {
-        this.idcard = idcard;
+    public void setidCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getEmail() {

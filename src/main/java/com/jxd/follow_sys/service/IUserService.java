@@ -21,4 +21,17 @@ public interface IUserService extends IService<User> {
     List<Map<String,Object>> getUserPwd2(String nameStr);
     //查询授课老师列表
     List<Map<String,Object>> getAllTeacherName();
+    //    修改密码模块
+    /**
+     * @Author: grz
+     * @Description:获取老师密码
+     * @Date:15:46 2020/11/5
+     */
+    String getTeacherPwd(Integer userId);
+    /**
+     * @Author: grz
+     * @Description:修改老师密码
+     * @Date:16:56 2020/11/5
+     */
+    int changeTeacherPwd(String pwd,Integer userId);
 }

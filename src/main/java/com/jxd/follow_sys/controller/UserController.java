@@ -63,4 +63,29 @@ public class UserController {
     public List<Map<String, Object>> getAllTeacherName(){
         return iUserService.getAllTeacherName();
     }
+    //    修改密码模块
+    /**
+     * @Author: grz
+     * @Description:获取用户密码
+     * @Date:15:46 2020/11/5
+     */
+    @RequestMapping("/getTeacherPwd/{userId}")
+    @ResponseBody
+    public String getTeacherPwd(@PathVariable("userId") int userId){
+        return iUserService.getTeacherPwd(userId);
+    }
+    /**
+     * @Author: grz
+     * @Description:修改密码
+     * @Date:15:46 2020/11/5
+     */
+    @RequestMapping("/changeTeacherPwd/{pass}/{userId}")
+    @ResponseBody
+    public boolean changeTeacherPwd(@PathVariable("pass") String pwd,@PathVariable("userId") int userId){
+        boolean flag =false;
+        if(iUserService.changeTeacherPwd(pwd,userId)>0){
+            flag=true;
+        }
+        return flag;
+    }
 }

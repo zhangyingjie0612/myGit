@@ -11,11 +11,27 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @Version 1.0
  */
 public class ClassCourse {
+    private int id;
     private int classid;
     private int courseid;
     private int flag;
 
     public ClassCourse() {
+    }
+
+    public ClassCourse(int id, int classid, int courseid, int flag) {
+        this.id = id;
+        this.classid = classid;
+        this.courseid = courseid;
+        this.flag = flag;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public ClassCourse(int classid, int courseid, int flag) {
