@@ -28,4 +28,13 @@
     <select id="getAllTeacherName" resultType="map">
         select userName,userId from user where roleId=1
     </select>
+    <!--    修改老师密码模块-->
+    <!--    获取老师密码-->
+    <select id="getTeacherPwd" resultType="String">
+        select pwd from user where userId = #{userId}
+    </select>
+    <!--    修改密码-->
+    <update id="changeTeacherPwd" >
+        update user set pwd= #{pwd} where userId = #{userId}
+    </update>
 </mapper>
