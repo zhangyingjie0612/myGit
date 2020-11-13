@@ -38,4 +38,22 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
     public List<Map<String, Object>> getAllTeacherName() {
         return iUserMapper.getAllTeacherName();
     }
+    //    修改密码模块
+    /**
+     * @Author: grz
+     * @Description:获取老师密码
+     * @Date:15:46 2020/11/5
+     */
+    public String getTeacherPwd(Integer userId) {
+        return iUserMapper.getTeacherPwd(userId);
+    }
+
+    /**
+     * @Author: grz
+     * @Description:修改老师密码
+     * @Date:16:56 2020/11/5
+     */
+    public int changeTeacherPwd(String pwd, Integer userId) {
+        return iUserMapper.changeTeacherPwd(pwd,userId);
+    }
 }

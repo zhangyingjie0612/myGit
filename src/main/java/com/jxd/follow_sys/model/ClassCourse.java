@@ -1,5 +1,8 @@
 package com.jxd.follow_sys.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * @ClassName ClassCourse
  * @Description TODO
@@ -8,10 +11,10 @@ package com.jxd.follow_sys.model;
  * @Version 1.0
  */
 public class ClassCourse {
-    private int id;//主键，自增
+    private int id;
     private int classid;
     private int courseid;
-    private int flag;//默认为1
+    private int flag;
 
     public ClassCourse() {
     }
@@ -23,6 +26,14 @@ public class ClassCourse {
         this.flag = flag;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public ClassCourse(int classid, int courseid, int flag) {
         this.classid = classid;
         this.courseid = courseid;
@@ -32,14 +43,6 @@ public class ClassCourse {
     public ClassCourse(int classid, int courseid) {
         this.classid = classid;
         this.courseid = courseid;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getClassid() {

@@ -91,7 +91,7 @@ public class StudentController {
         System.out.println("ajax文件上传");
         //上传的位置
 
-        String path = "E:\\vueProjects\\follow_sys\\static\\imgs";
+        String path = "E:\\WebstormProjects\\workspace\\follow_vue\\static\\imgs";
         System.out.println("path:"+path);
         //判断，该路径是否存在
         File file =new File(path);
