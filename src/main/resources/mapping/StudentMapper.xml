@@ -13,66 +13,6 @@
         </where>
         ) m on m.courseId=o.courseId
     </select>
-<!--    <select id="getStudents" resultType="java.util.HashMap">-->
-<!--        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s-->
-<!--        left join-->
-<!--        (select stuid-->
-<!--        <foreach collection="list" item="course" open="," separator=",">-->
-<!--            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}-->
-<!--        </foreach>-->
-<!--        from score-->
-<!--        group by stuid)m on s.stuid=m.stuid-->
-<!--        <where>-->
-<!--            <if test="className!='all'">-->
-<!--                s.className=#{className}-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        ) a left join (select m.evlScore,x.* from school_evl m join (-->
-<!--        select j.stuid,y1.sumScore s1,y2.sumScore s2,y3.sumScore s3,y4.sumScore s4-->
-<!--        from job_evaluation j-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid-->
-<!--        group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid-->
-<!--        <where>-->
-<!--            state!=4-->
-<!--            <if test="nameStr!='all'">-->
-<!--                and stuname like '%' #{nameStr} '%'-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        limit #{counts},#{pageSize}-->
-<!--    </select>-->
-<!--    <select id="getStudents2" resultType="java.util.HashMap">-->
-<!--        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s-->
-<!--        left join-->
-<!--        (select stuid-->
-<!--        <foreach collection="list" item="course" open="," separator=",">-->
-<!--            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}-->
-<!--        </foreach>-->
-<!--        from score-->
-<!--        group by stuid)m on s.stuid=m.stuid-->
-<!--        <where>-->
-<!--            state!=4-->
-<!--            <if test="className!='all'">-->
-<!--                and s.className=#{className}-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        ) a left join (select m.evlScore,x.* from school_evl m join (-->
-<!--        select j.stuid,y1.sumScore s1,y2.sumScore s2,y3.sumScore s3,y4.sumScore s4-->
-<!--        from job_evaluation j-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid-->
-<!--        left join(select stuid,sumScore from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid-->
-<!--        group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid-->
-<!--        <where>-->
-<!--            <if test="nameStr!='all'">-->
-<!--                stuname like '%' #{nameStr} '%'-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
-<!--    获取学生信息与成绩-->
     <select id="getStudents" resultType="java.util.HashMap">
         select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s
         left join
@@ -88,12 +28,12 @@
             </if>
         </where>
         ) a left join (select m.evlScore,m.evlContent,(select userName from user where userId = m.userId) userName,x.* from school_evl m join (
-        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
+        select j.stuid,y1.sumScore s1,y2.sumScore s2,y3.sumScore s3,y4.sumScore s4
         from job_evaluation j
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
         group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
         <where>
             state!=4
@@ -114,24 +54,84 @@
         group by stuid)m on s.stuid=m.stuid
         <where>
             <if test="className!='all'">
-                s.className=#{className}
+                 s.className=#{className}
             </if>
         </where>
         ) a left join (select m.evlScore,m.evlContent,(select userName from user where userId = m.userId) userName,x.* from school_evl m join (
-        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4
+        select j.stuid,y1.sumScore s1,y2.sumScore s2,y3.sumScore s3,y4.sumScore s4
         from job_evaluation j
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
-        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid
+        left join(select stuid,sumScore from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid
         group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid
         <where>
-            state!=4
+          state!=4
             <if test="nameStr!='all'">
-                and stuname like '%' #{nameStr} '%'
+               and stuname like '%' #{nameStr} '%'
             </if>
         </where>
     </select>
+<!--&lt;!&ndash;    获取学生信息与成绩&ndash;&gt;-->
+<!--    <select id="getStudents" resultType="java.util.HashMap">-->
+<!--        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s-->
+<!--        left join-->
+<!--        (select stuid-->
+<!--        <foreach collection="list" item="course" open="," separator=",">-->
+<!--            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}-->
+<!--        </foreach>-->
+<!--        from score-->
+<!--        group by stuid)m on s.stuid=m.stuid-->
+<!--        <where>-->
+<!--            <if test="className!='all'">-->
+<!--                s.className=#{className}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        ) a left join (select m.evlScore,m.evlContent,(select userName from user where userId = m.userId) userName,x.* from school_evl m join (-->
+<!--        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4-->
+<!--        from job_evaluation j-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid-->
+<!--        group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid-->
+<!--        <where>-->
+<!--            state!=4-->
+<!--            <if test="nameStr!='all'">-->
+<!--                and stuname like '%' #{nameStr} '%'-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit #{counts},#{pageSize}-->
+<!--    </select>-->
+<!--    <select id="getStudents2" resultType="java.util.HashMap">-->
+<!--        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s-->
+<!--        left join-->
+<!--        (select stuid-->
+<!--        <foreach collection="list" item="course" open="," separator=",">-->
+<!--            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}-->
+<!--        </foreach>-->
+<!--        from score-->
+<!--        group by stuid)m on s.stuid=m.stuid-->
+<!--        <where>-->
+<!--            <if test="className!='all'">-->
+<!--                s.className=#{className}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        ) a left join (select m.evlScore,m.evlContent,(select userName from user where userId = m.userId) userName,x.* from school_evl m join (-->
+<!--        select j.stuid,y1.jobEvlContent s1,y2.jobEvlContent s2,y3.jobEvlContent s3,y4.jobEvlContent s4-->
+<!--        from job_evaluation j-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=0)y1 on y1.stuid=j.stuid-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=1)y2 on y2.stuid=y1.stuid-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=2)y3 on y3.stuid=y2.stuid-->
+<!--        left join(select stuid,jobEvlContent from job_evaluation where dateId=3)y4 on y4.stuid=y3.stuid-->
+<!--        group by j.stuid) x on m.stuid=x.stuid) b on a.stuid=b.stuid-->
+<!--        <where>-->
+<!--            state!=4-->
+<!--            <if test="nameStr!='all'">-->
+<!--                and stuname like '%' #{nameStr} '%'-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
     <select id="studentsListByPage" resultType="map">
         select * from student
         <where>
