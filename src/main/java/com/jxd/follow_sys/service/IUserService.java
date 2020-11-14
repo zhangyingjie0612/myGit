@@ -34,4 +34,13 @@ public interface IUserService extends IService<User> {
      * @Date:16:56 2020/11/5
      */
     int changeTeacherPwd(String pwd,Integer userId);
+
+    /*hmt*/
+
+    Map<String, Object> getLogin(User user);
+
+    int updateLoginTime(User user);
+
+
+
 }
