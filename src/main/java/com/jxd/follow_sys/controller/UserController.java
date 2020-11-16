@@ -1,8 +1,11 @@
 package com.jxd.follow_sys.controller;
 
+import com.jxd.follow_sys.model.User;
 import com.jxd.follow_sys.service.IUserService;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -87,5 +90,32 @@ public class UserController {
             flag=true;
         }
         return flag;
+    }
+
+    /**
+     * @description: 登录验证
+     * @Author humengting
+     * @date: 2020/11/14 8:27
+     * @return
+     */
+    @RequestMapping("/user/getLogin")
+    @ResponseBody
+    public Map<String, Object> getLogin(@RequestBody String data){
+        //将data转换为json对象
+        JSONObject jsonObject = JSONObject.fromObject(data);
+        //获取用户名、密码和登录时间
+        String userName = jsonObject.getString("userName");
+        String pwd = jsonObject.getString("pwd");
+        String loginTime = jsonObject.getString("loginTime");
+        //封装成user
+        User user1= new User(userName,pwd,loginTime);
+        //根据user登录验证
+        Map<String, Object> map = iUserService.getLogin(user1);
+        if (null!=map){
+            //登录验证成功则更新登录时间
+            iUserService.updateLoginTime(user1);
+        }
+        //返回用户id，用户角色
+        return map;
     }
 }

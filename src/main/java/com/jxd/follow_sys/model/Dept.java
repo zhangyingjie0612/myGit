@@ -20,6 +20,15 @@ public class Dept {
     public Dept() {
     }
 
+    public Dept(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public Dept(int deptId, String deptName) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+    }
+
     public Dept(int deptId, String deptName, int flag) {
         this.deptId = deptId;
         this.deptName = deptName;

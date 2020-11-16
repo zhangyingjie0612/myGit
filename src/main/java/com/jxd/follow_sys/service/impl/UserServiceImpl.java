@@ -59,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
 
 
     /*hmt*/
-    public Integer getLogin(User user){
+    public Map<String, Object> getLogin(User user){
         return iUserMapper.getLogin(user);
     }
 
