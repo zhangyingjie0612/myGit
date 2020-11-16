@@ -1,6 +1,7 @@
 package com.jxd.follow_sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.model.Schoolevl;
 import com.jxd.follow_sys.model.User;
 import org.apache.ibatis.annotations.Param;
@@ -67,4 +68,10 @@ public interface ITeacherMapper  extends BaseMapper<User> {
      * @Date:14:56 2020/11/5
      */
     int updateSchoolEvl(@Param("schoolEvl") Schoolevl schoolEvl);
+    /**
+     * @Author: grz
+     * @Description:获取学生信息成绩
+     * @Date:12:11 2020/11/16
+     */
+    List<Map<String,Object>> getStudents3(@Param("list")List<Course> courseId, @Param("nameStr")String nameStr,@Param("className")String className);
 }

@@ -41,5 +41,8 @@ public class Test {
 //        for(Map map:list){
 //            System.out.println(map.get("sex"));
 //        }
+        System.out.println("http://localhost:8080/images/".length());
+        System.out.println("../../static/imgs/".length());
+
     }
 }
