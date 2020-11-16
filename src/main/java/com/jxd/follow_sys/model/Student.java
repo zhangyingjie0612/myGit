@@ -14,25 +14,25 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName(value = "student")
 public class Student {
     @TableId(value = "stuId") //@TableId声明主键，value值对应表的字段名
-    private int stuId;
+    private int stuId;//学生Id
     @TableField(value = "stuName")
-    private String stuName;
-    private String sex;
-    private String nation;
-    private String birthday;
-    private String birthplace;
-    private String marry;
-    private String telephone;
-    private String idCard;
-    private String university;
-    private String major;
-    private String photo;
-    private String note;
-    private int state;//0/1/2/3 培训/转正1年/2年/3年  默认为0
-    private String className;
-    private String deptName;
-    private String job;
-    private String jobtime;
+    private String stuName;//学生姓名
+    private String sex;//学生性别
+    private String nation;//民族
+    private String birthday;//生日
+    private String birthplace;//籍贯
+    private String marry;//是否结婚
+    private String telephone;//电话
+    private String idCard;//身份证
+    private String university;//毕业院校
+    private String major;//专业
+    private String photo;//照片
+    private String note;//备注
+    private int state;//0/1/2/3/4/5 培训/转正1年/2年/3年/删除/转正  默认为0
+    private String className;//班期名称
+    private String deptName;//部门名称
+    private String job;//工作名称
+    private String jobtime;//入职时间
 
     public Student() {
     }

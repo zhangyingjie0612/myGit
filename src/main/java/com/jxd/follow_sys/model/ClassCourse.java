@@ -11,10 +11,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @Version 1.0
  */
 public class ClassCourse {
-    private int id;
-    private int classid;
-    private int courseid;
-    private int flag;
+    private int id;//主键
+    private int classid;//班期id
+    private int courseid;//课程id
+    private int flag;//是否打分flag=1未打分；flag=0已打分
 
     public ClassCourse() {
     }
