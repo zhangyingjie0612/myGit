@@ -8,11 +8,11 @@ package com.jxd.follow_sys.model;
  * @Version V1.0
  **/
 public class Schoolevl {
-    private Integer eId;
-    private Integer stuId;
-    private Integer userId;
-    private String evlScore;
-    private String evlContent;
+    private Integer eId;//id主键
+    private Integer stuId;//学生id
+    private Integer userId;//用户id
+    private String evlScore;//整体分数
+    private String evlContent;//评价
 
     public Schoolevl() {
     }
