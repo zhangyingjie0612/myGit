@@ -20,9 +20,18 @@ public class Course {
     public Course() {
     }
 
+    public Course(String coursename) {
+        this.coursename = coursename;
+    }
+
     public Course(int courseId, String coursename) {
         this.courseId = courseId;
         this.coursename = coursename;
+    }
+
+    public Course(String coursename, int flag) {
+        this.coursename = coursename;
+        this.flag = flag;
     }
 
     public Course(int courseId, String coursename, int flag) {
@@ -30,6 +39,7 @@ public class Course {
         this.coursename = coursename;
         this.flag = flag;
     }
+
 
     public int getCourseId() {
         return courseId;
@@ -54,4 +64,6 @@ public class Course {
     public void setFlag(int flag) {
         this.flag = flag;
     }
+
+
 }

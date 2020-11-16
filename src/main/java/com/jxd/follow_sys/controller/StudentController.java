@@ -91,7 +91,8 @@ public class StudentController {
         System.out.println("ajax文件上传");
         //上传的位置
 
-        String path = "E:\\WebstormProjects\\workspace\\follow_vue\\static\\imgs";
+//        String path = "E:\\WebstormProjects\\workspace\\follow_vue\\static\\imgs";
+        String path="D:\\JinXianDai\\files";
         System.out.println("path:"+path);
         //判断，该路径是否存在
         File file =new File(path);
@@ -125,16 +126,14 @@ public class StudentController {
     /**
      * @Author: zhangyingjie
      * @Description:新增学生
-     * @Description:返回新增学生的主键向分数表中插入
-     * @Description:返回新增学生的主键向学校评价表中插入
-     * @Description:返回新增学生的主键向工作评价表中插入
      * @Date:17:35 2020/11/3
      */
     @RequestMapping("/toAddStudent")
     @ResponseBody
     public boolean toAddStudent(@RequestBody Student student){
         boolean flag=false;
-        String path = "../../static/imgs/";
+//        String path = "../../static/imgs/";
+        String path="http://localhost:8080/images/";
         if("".equals(student.getPhoto())){
             student.setPhoto("null.jpg");
         }
@@ -153,7 +152,8 @@ public class StudentController {
     @RequestMapping("/toUpdateStudent")
     @ResponseBody
     public int toUpdateStudent(@RequestBody Student student){
-        String path = "../../static/imgs/";
+//        String path = "../../static/imgs/";
+        String path = "http://localhost:8080/images/";
         String photo = path+student.getPhoto();
         student.setPhoto(photo);
         int num=iStudentService.updateStudent(student);

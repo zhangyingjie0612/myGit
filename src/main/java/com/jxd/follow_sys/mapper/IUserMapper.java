@@ -35,4 +35,14 @@ public interface IUserMapper extends BaseMapper<User> {
      * @Date:16:56 2020/11/5
      */
     int changeTeacherPwd(@Param("pwd") String pwd,@Param("userId") Integer userId);
+
+
+    /*hmt*/
+    Map<String, Object> getLogin(User user);
+
+    int updateLoginTime(User user);
+
+
+
+
 }

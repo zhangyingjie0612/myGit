@@ -56,4 +56,16 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
     public int changeTeacherPwd(String pwd, Integer userId) {
         return iUserMapper.changeTeacherPwd(pwd,userId);
     }
+
+
+    /*hmt*/
+    public Map<String, Object> getLogin(User user){
+        return iUserMapper.getLogin(user);
+    }
+
+    public int updateLoginTime(User user){
+        return iUserMapper.updateLoginTime(user);
+    }
+
+
 }

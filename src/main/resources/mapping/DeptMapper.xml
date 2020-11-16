@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当我们的mapper接口和mapper.xml文件关联时，命名空间namspace的值就需要配置成
+接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IDeptMapper">
+    <!--根据deptName查询计数-->
+    <select id="getTotalNumByLike" resultType="int">
+        select count(*) from dept
+        <where>
+            <if test="deptName!= 'all'">
+                deptName like concat('%',#{deptName},'%')
+            </if>
+            <if test="deptId!= 'all'">
+                and deptId = ${deptId}
+            </if>
+        </where>
+    </select>
+
+    <!--根据deptName查询分页列表-->
+    <select id="getPageListByLike" resultType="map">
+        select deptId,deptName from dept
+        <where>
+            flag = 1
+            <if test="deptName != 'all'">
+                and deptName like concat('%',#{deptName},'%')
+            </if>
+            <if test="deptId!= 'all'">
+               and deptId = ${deptId}
+            </if>
+        </where>
+        order by deptId
+        limit #{counts},#{pagesize}
+    </select>
+
+<!--根据dept实体类更新-->
+    <update id="update">
+        update dept set deptName=#{deptName} where deptId=#{deptId}
+    </update>
+
+<!--根据id删除-->
+    <delete id="deleteById">
+        delete from dept where deptId=#{deptId}
+    </delete>
+
+    <!--根据id假删，设flag=0-->
+    <update id="deleteByIdFake">
+        update dept set flag=0  where deptId=#{deptId}
+    </update>
+
+    <!--根据ids假删，设置flag为-1-->
+    <update id="batchDeleteByIds">
+        update dept set flag = 0 where deptId in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <!--根据dept实体类添加-->
+    <insert id="add">
+        insert into dept(deptId,deptName) values (#{deptId},#{deptName})
+    </insert>
+
+    <!--查询该deptName是否有成员在user中-->
+    <select id="ifUserExist" resultType="int">
+        select count(*) from user u inner join dept d on u.deptName=d.deptName  where deptId in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--查询该deptName是否有成员在student中-->
+    <select id="ifStudentExist" resultType="int">
+        select count(*) from student s inner join dept d on s.deptName=d.deptName   where deptId in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--用于新增，查询名字是否存在，避免重复-->
+    <select id="checkAddName" resultType="int">
+        select count(*) from dept where deptName = #{deptName}
+    </select>
+
+</mapper>

@@ -54,23 +54,15 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
         try {
             iStudentMapper.addStudent(student);
             int num=student.getStuId();
-            iStudentMapper.addStudentToScore(num);
+//            iStudentMapper.addStudentToScore(num);
 //            iStudentMapper.addStuToSchool(num);
-            iStudentMapper.addStuToJob(num);
+//            iStudentMapper.addStuToJob(num);
             result = true;
         } catch (Exception e) {
             //事务回滚异常需要抛出来
             throw e;
         }
         return result;
-    }
-
-    public int addStudentToScore(int stuId) {
-        return iStudentMapper.addStudentToScore(stuId);
-    }
-
-    public int addStuToJob(int stuId) {
-        return iStudentMapper.addStuToJob(stuId);
     }
 
     public int updateStudent(Student student) {

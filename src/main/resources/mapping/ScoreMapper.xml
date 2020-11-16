@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当我们的mapper接口和mapper.xml文件关联时，命名空间namspace的值就需要配置成
+接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IScoreMapper">
+    <!--根据classId获取需要的学生信息列表-->
+    <select id="getAllList" resultType="map">
+        select stuId,stuName,s.classname as classname,null as score
+        from student s left join class c
+        on s.classname=c.classname
+        where c.classId = #{classId}
+        order by stuId
+    </select>
+
+    <!--根据score实体类插入一个班级的成绩-->
+    <insert id="addScoreByClass">
+        <foreach collection="list" item="item" separator=";">
+            insert into score (stuId,courseId,score) values
+            (#{item.stuId},#{item.courseId},#{item.score})
+        </foreach>
+    </insert>
+
+    <!-- 传入userId，用于下拉选项，disable-->
+    <select id="getClassData" resultType="map">
+        select c.classname as label,c.classId as value ,case when sum(cs.flag)=0 then 'true' else 'false' end as disabled
+        FROM class c LEFT join classcourse cs
+        on c.classId=cs.classId
+        WHERE c.userId=#{userId}
+        GROUP BY c.classId
+        ORDER BY disabled , c.classname DESC
+    </select>
+
+    <!--传入classId-->
+    <select id="getCourseData" resultType="map">
+        SELECT c.courseName as label,c.courseId as value ,cs.flag as disabled
+        FROM classcourse cs LEFT JOIN course c
+        on cs.courseId = c.courseId
+        WHERE cs.classId=#{classId}
+    </select>
+
+    <!--写一个让classcourse的flag=0-->
+    <update id="updateClasscourseFlag">
+        update classcourse set flag=0 where classId=#{classId} and courseId =#{courseId}
+    </update>
+</mapper>
