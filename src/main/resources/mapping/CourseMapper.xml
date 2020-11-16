@@ -13,46 +13,46 @@
             <if test="coursename!= 'all'">
                 and coursename like concat('%',#{coursename},'%')
             </if>
-            <if test="courseid!= 'all'">
-                and courseid = ${courseid}
+            <if test="courseId!= 'all'">
+                and courseId = ${courseId}
             </if>
         </where>
     </select>
 
     <!--根据coursename查询分页列表，排除假删的数据：flag=-1 -->
     <select id="getPageListByLike" resultType="map">
-        select courseid,coursename from course
+        select courseId,coursename from course
         <where>
             flag !=-1
             <if test="coursename != 'all'">
                 and coursename like concat('%',#{coursename},'%')
             </if>
-            <if test="courseid!= 'all'">
-                and courseid = ${courseid}
+            <if test="courseId!= 'all'">
+                and courseId = ${courseId}
             </if>
         </where>
-        order by courseid
+        order by courseId
         limit #{counts},#{pagesize}
     </select>
 
     <!--根据course实体类更新-->
     <update id="update">
-        update course set coursename=#{coursename} where courseid=#{courseid}
+        update course set coursename=#{coursename} where courseId=#{courseId}
     </update>
 
     <!--根据id删除-->
     <delete id="deleteById">
-        delete from course where courseid=#{courseid}
+        delete from course where courseId=#{courseId}
     </delete>
 
     <!--考虑假删，设置flag为-1-->
     <update id="deleteByIdFake">
-        update course set flag = -1 where courseid=#{courseid}
+        update course set flag = -1 where courseId=#{courseId}
     </update>
 
     <!--根据ids假删，设置flag为-1-->
     <update id="batchDeleteByIds">
-        update course set flag = -1 where courseid in
+        update course set flag = -1 where courseId in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
@@ -66,7 +66,7 @@
 
     <!--查询在classcourse中是否有该课程-->
     <select id="ifClasscourseExist" resultType="int">
-        select count(*) from classcourse  where courseid in
+        select count(*) from classcourse  where courseId in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
