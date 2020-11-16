@@ -13,20 +13,20 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName(value = "user")
 public class User {
     @TableId(value = "userId") //@TableId声明主键，value值对应表的字段名
-    private int userId;
-    private String userName;
-    private String pwd;
-    private String sex;
-    private String telephone;
-    private String idCard;
-    private String email;
-    private String note;
-    private int flag;
-    private String birthday;
-    private int deptNo;
-    private int roleId;
-    private String photo;
-    private String loginTime;
+    private int userId;//用户id
+    private String userName;//用户姓名
+    private String pwd;//密码
+    private String sex;//性别
+    private String telephone;//电话
+    private String idCard;//身份证
+    private String email;//邮箱
+    private String note;//备注
+    private int flag;//0/1/2  0为删除   默认为1（在职）2离职
+    private String birthday;//生日
+    private int deptNo;//部门Id
+    private int roleId;//角色id
+    private String photo;//照片
+    private String loginTime;//登陆时间
 
     public User() {
     }
