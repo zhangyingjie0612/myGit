@@ -1,7 +1,9 @@
 package com.jxd.follow_sys.controller;
 
+import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.model.Schoolevl;
 import com.jxd.follow_sys.model.User;
+import com.jxd.follow_sys.service.ICourseService;
 import com.jxd.follow_sys.service.IStudentService;
 import com.jxd.follow_sys.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +29,8 @@ import java.util.UUID;
 public class TeacherController {
     @Autowired
     ITeacherService iTeacherService;
+    @Resource
+    ICourseService courseService;
     /**
      * @Author: grz
      * @Description:管理员查看教师
@@ -54,7 +59,9 @@ public class TeacherController {
         if("".equals(teacherDate1.getPhoto())){
             teacherDate1.setPhoto("null.jpg");
         }
-        String path = "../../static/imgs/";
+//        String path = "../../static/imgs/";
+        String path = "http://localhost:8080/images/";
+
         String photo = path+teacherDate1.getPhoto();
         teacherDate1.setPhoto(photo);
         if(iTeacherService.addTeacher(teacherDate1)>0){
@@ -71,7 +78,7 @@ public class TeacherController {
     @ResponseBody
     public boolean updateTeacher(@RequestBody User teacherDate){
         boolean flag1 =false;
-        String path = "../../static/imgs/";
+        String path = "http://localhost:8080/images/";
         String photo = path+teacherDate.getPhoto();
         teacherDate.setPhoto(photo);
         if(iTeacherService.updateTeacher(teacherDate)>0){
@@ -183,7 +190,9 @@ public class TeacherController {
         System.out.println("ajax文件上传");
         //上传的位置
 
-        String path = "E:\\WebstormProjects\\workspace\\follow_vue\\static\\imgs";
+//        String path = "E:\\WebstormProjects\\workspace\\follow_vue\\static\\imgs";
+        String path = "D:\\JinXianDai\\files";
+
 //        String path = "F:\\springmvc\\";
         System.out.println("path:"+path);
         //判断，该路径是否存在
@@ -204,5 +213,12 @@ public class TeacherController {
         upload.transferTo(newFile);
         //返回文件名
         return filename;
+    }
+    @RequestMapping("/getStudentList3/{nameStr}/{className}")
+    @ResponseBody
+    public List<Map<String,Object>> studentTrace3(@PathVariable("nameStr")String nameStr,
+                                                  @PathVariable("className")String className){
+        List<Course> courses = courseService.list();
+        return iTeacherService.getStudents3(courses,nameStr,className);
     }
 }

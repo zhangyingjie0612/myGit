@@ -3,6 +3,7 @@ package com.jxd.follow_sys.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxd.follow_sys.mapper.ITeacherMapper;
 import com.jxd.follow_sys.mapper.IUserMapper;
+import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.model.Schoolevl;
 import com.jxd.follow_sys.model.User;
 import com.jxd.follow_sys.service.ITeacherService;
@@ -110,5 +111,13 @@ public class TeacherServiceImpl extends ServiceImpl<ITeacherMapper, User>  imple
      */
     public int updateSchoolEvl(Schoolevl schoolEvl) {
         return iTeacherMapper.updateSchoolEvl(schoolEvl);
+    }
+/**
+ * @Author: grz
+ * @Description:获取学生信息成绩
+ * @Date:12:11 2020/11/16
+ */
+    public List<Map<String, Object>> getStudents3(List<Course> courseId, String nameStr, String className) {
+        return iTeacherMapper.getStudents3(courseId,nameStr,className);
     }
 }

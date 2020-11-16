@@ -9,7 +9,7 @@
     <select id="getTotalNumByLike" resultType="int">
         select count(*) from course
         <where>
-            flag !=-1
+            flag =1
             <if test="coursename!= 'all'">
                 and coursename like concat('%',#{coursename},'%')
             </if>
@@ -23,7 +23,7 @@
     <select id="getPageListByLike" resultType="map">
         select courseId,coursename from course
         <where>
-            flag !=-1
+            flag =1
             <if test="coursename != 'all'">
                 and coursename like concat('%',#{coursename},'%')
             </if>

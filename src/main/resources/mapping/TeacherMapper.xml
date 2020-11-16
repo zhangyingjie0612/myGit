@@ -29,7 +29,7 @@
     <insert id="addTeacher" >
         insert into user
         values (null,#{teacher.userName},#{teacher.pwd},#{teacher.sex},#{teacher.telephone},#{teacher.idCard},#{teacher.email},
-        #{teacher.note},#{teacher.flag},#{teacher.birthday},#{teacher.deptNo},#{teacher.roleId},#{teacher.photo})
+        #{teacher.note},#{teacher.flag},#{teacher.birthday},#{teacher.deptNo},#{teacher.roleId},#{teacher.photo},null)
     </insert>
     <!--    编辑教师-->
     <update id="updateTeacher" >
@@ -112,6 +112,29 @@
         insert into school_evl
         values(null,#{schoolEvl.stuId},#{schoolEvl.userId},#{schoolEvl.evlScore},#{schoolEvl.evlContent})
     </insert>
+<!--    获取成绩和基本信息-->
+    <select id="getStudents3" resultType="java.util.HashMap">
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s
+        left join
+        (select stuid
+        <foreach collection="list" item="course" open="," separator=",">
+            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
+        </foreach>
+        from score
+        group by stuid)m on s.stuid=m.stuid
+        <where>
+            <if test="className!='all'">
+                s.className=#{className}
+            </if>
+        </where>
+        ) a left join (select m.*,(select userName from user where userId = m.userId) userName from school_evl m) b on a.stuid=b.stuid
+        <where>
+            state!=4
+            <if test="nameStr!='all'">
+                and stuname like '%' #{nameStr} '%'
+            </if>
+        </where>
+    </select>
     <!--    教师修改评价-->
     <update id="updateSchoolEvl">
         update  school_evl set

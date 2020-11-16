@@ -1,6 +1,7 @@
 package com.jxd.follow_sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxd.follow_sys.model.Course;
 import com.jxd.follow_sys.model.Schoolevl;
 import com.jxd.follow_sys.model.User;
 
@@ -65,4 +66,11 @@ public interface ITeacherService extends IService<User> {
      * @Date:14:56 2020/11/5
      */
     int updateSchoolEvl(Schoolevl schoolEvl);
+    /**
+     * @Author: grz
+     * @Description:获取学生信息成绩
+     * @Date:12:11 2020/11/16
+     */
+    List<Map<String,Object>> getStudents3(List<Course> courseId, String nameStr, String className);
+
 }

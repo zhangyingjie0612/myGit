@@ -27,7 +27,7 @@ public class DemoController {
     @RequestMapping("/getMenu/{userid}")
     @ResponseBody
     public List<Map<String, Object>> getAllDeptByLike(@PathVariable("userid") String userid) {
-        List<Map<String, Object>> a =iMenuService.queryMenuInfo(userid);
-        return a;
+        List<Map<String, Object>> menu =iMenuService.queryMenuInfo(userid);
+        return menu;
     }
 }
