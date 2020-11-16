@@ -26,9 +26,15 @@ public class User {
     private int deptNo;
     private int roleId;
     private String photo;
-
+    private String loginTime;
 
     public User() {
+    }
+
+    public User(String userName, String pwd, String loginTime) {
+        this.userName = userName;
+        this.pwd = pwd;
+        this.loginTime = loginTime;
     }
 
     public User(int userId, String userName, String pwd, String telephone, String idCard, String email, String note,
@@ -76,6 +82,14 @@ public class User {
         this.roleId = roleId;
         this.photo = photo;
         this.sex = sex;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
     }
 
     public int getUserId() {

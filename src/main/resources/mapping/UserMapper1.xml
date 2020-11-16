@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当我们的mapper接口和mapper.xml文件关联时，命名空间namspace的值就需要配置成
+接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IUserMapper">
+    <!--验证登录功能，返回userId和roleId-->
+    <select id="getLogin" resultType="map">
+       select roleId,userId from user where userName=#{userName} and pwd=#{pwd}
+   </select>
+
+    <!--更新登录时间-->
+    <update id="updateLoginTime">
+       update user set loginTime=#{loginTime} where userName=#{userName}
+   </update>
+</mapper>
