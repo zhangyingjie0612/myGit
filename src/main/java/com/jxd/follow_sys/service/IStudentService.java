@@ -27,14 +27,6 @@ public interface IStudentService extends IService<Student> {
     List<Map<String,Object>> getAllClassName();
     //新增学生
     boolean addStudent(Student student);
-//    boolean addStudent(String stuName, String sex, String nation, String birthday, String birthplace, String marry,
-//                       String telephone, String idCard, String university, String major, String photo, String note, String className);
-    //向分数表中插入学生Id
-//    int addStudentToScore(int stuId);
-    //向学校评价school_evl表里插入学生id
-//    int addStuToSchool(int stuId);
-    //向job_evaluation工作评价表里插入学生id
-//    int addStuToJob(int stuId);
     //编辑学生
     int updateStudent(Student student);
     //删除学生

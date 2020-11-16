@@ -31,12 +31,6 @@ public interface IStudentMapper extends BaseMapper<Student> {
     List<Map<String,Object>> getAllClassName();
     //新增学生
     boolean addStudent(Student student);
-    //向分数表中插入学生Id
-//    int addStudentToScore(int stuId);
-    //向学校评价school_evl表里插入学生id
-//    int addStuToSchool(int stuId);
-    //向job_evaluation工作评价表里插入学生id
-//    int addStuToJob(int stuId);
     //编辑学生
     int updateStudent(Student student);
     //删除学生
