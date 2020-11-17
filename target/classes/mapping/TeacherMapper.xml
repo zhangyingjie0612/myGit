@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--dao接口的全限定名-->
+<mapper namespace="com.jxd.follow_sys.mapper.ITeacherMapper">
+    <sql id="BaseSql">
+        select * from student
+    </sql>
+    <!--    管理员获取老师-->
+    <select id="getTeacher" resultType="map">
+        select * from user
+        <where>
+            roleid = 1 and flag !=0
+            <if test="userName !='all'">
+                and userName like '%' #{userName} '%'
+            </if>
+        </where>
+        limit #{counts},#{pageSize}
+    </select>
+    <select id="getTeacherByLike" resultType="map">
+        select * from user
+        <where>
+            roleid = 1 and flag !=0
+            <if test="userName !='all'">
+                and userName like '%' #{userName} '%'
+            </if>
+        </where>
+    </select>
+    <!--    新增教师-->
+    <insert id="addTeacher" >
+        insert into user
+        values (null,#{teacher.userName},#{teacher.pwd},#{teacher.sex},#{teacher.telephone},#{teacher.idCard},#{teacher.email},
+        #{teacher.note},#{teacher.flag},#{teacher.birthday},#{teacher.deptNo},#{teacher.roleId},#{teacher.photo},null)
+    </insert>
+    <!--    编辑教师-->
+    <update id="updateTeacher" >
+        update user set
+        userName= #{teacher.userName},pwd= #{teacher.pwd},sex= #{teacher.sex},telephone= #{teacher.telephone},
+        idCard= #{teacher.idCard},email= #{teacher.email},note= #{teacher.note},flag= #{teacher.flag},
+        birthday= #{teacher.birthday},deptNo= #{teacher.deptNo},roleId= #{teacher.roleId},photo= #{teacher.photo}
+        where userId = #{teacher.userId}
+    </update>
+    <!--    批量删除-->
+    <delete id="deleteTeacherByIds">
+        update user set flag = 0 where userId in
+        <foreach collection="userId" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+    <!--    获取老师的班级-->
+    <select id="getClassName" resultType="map">
+   select   className from class where userid = #{userid}
+    </select>
+<!--    老师获取自己学生-->
+    <select id="getAllStuByPage" resultType="map">
+        <include refid="BaseSql"></include>
+        <where>
+            <if test="stuname !='all'">
+                stuname like '%' #{stuname} '%'
+            </if>
+            <if test="classname !='all'">
+                and classname like '%' #{classname} '%'
+            </if>
+        </where>
+        order by stuid
+        limit #{counts},#{pageSize}
+    </select>
+    <select id="getAllStuByLike" resultType="map">
+        <include refid="BaseSql"></include>
+        <where>
+            <if test="stuname !='all'">
+                stuname like '%' #{stuname} '%'
+            </if>
+            <if test="classname !='all'">
+                and classname like '%' #{classname} '%'
+            </if>
+        </where>
+    </select>
+    <!--    教师评价列表-->
+    <select id="getSchoolEvlByPage" resultType="java.util.HashMap">
+        select d.stuid,d.stuname,d.classname,d.state,e.evlScore,e.evlContent from school_evl e right join
+        (select * from student where  classname in (select   classname from class where userid = #{userid})) d
+        on e.stuid =d.stuid
+        <where>
+            d.state != 4
+            <if test="stuname !='all'">
+                d.stuname like '%' #{stuname} '%'
+            </if>
+            <if test="classname !='all'">
+                and classname like '%' #{classname} '%'
+            </if>
+
+        </where>
+        limit #{counts},#{pageSize}
+    </select>
+    <select id="getSchoolEvlByLike" resultType="java.util.HashMap">
+        select d.stuid,d.stuname,d.classname,d.state,e.evlScore,e.evlContent from school_evl e right join
+        (select * from student where  classname in (select   classname from class where userid = #{userid})) d
+        on e.stuid =d.stuid
+        <where>
+            d.state != 4
+            <if test="stuname !='all'">
+                d.stuname like '%' #{stuname} '%'
+            </if>
+            <if test="classname !='all'">
+                and classname like '%' #{classname} '%'
+            </if>
+
+        </where>
+    </select>
+    <!--    教师评价-->
+    <insert id="insertSchoolEvl">
+        insert into school_evl
+        values(null,#{schoolEvl.stuId},#{schoolEvl.userId},#{schoolEvl.evlScore},#{schoolEvl.evlContent})
+    </insert>
+<!--    获取成绩和基本信息-->
+    <select id="getStudents3" resultType="java.util.HashMap">
+        select a.*,b.* from (select s.stuname,s.sex,s.university,s.birthplace,s.className,s.state,m.* from student s
+        left join
+        (select stuid
+        <foreach collection="list" item="course" open="," separator=",">
+            sum(case when courseid = #{course.courseId} then score end) z${course.courseId}
+        </foreach>
+        from score
+        group by stuid)m on s.stuid=m.stuid
+        <where>
+            <if test="className!='all'">
+                s.className=#{className}
+            </if>
+        </where>
+        ) a left join (select m.*,(select userName from user where userId = m.userId) userName from school_evl m) b on a.stuid=b.stuid
+        <where>
+            state!=4
+            <if test="nameStr!='all'">
+                and stuname like '%' #{nameStr} '%'
+            </if>
+        </where>
+    </select>
+    <!--    教师修改评价-->
+    <update id="updateSchoolEvl">
+        update  school_evl set
+        userId = #{schoolEvl.userId},evlScore = #{schoolEvl.evlScore},evlContent = #{schoolEvl.evlContent} where stuId = #{schoolEvl.stuId}
+    </update>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IEvlMapper">
+
+    <!--根据coursename查询计数 ,排除假删的数据：flag=-1-->
+    <select id="getTotalNumByLike" resultType="int">
+        select count(*) from student
+        where   deptName = #{deptName}
+        <if test="stuname!= 'all'">
+            and stuname like concat('%',#{stuname},'%')
+        </if>
+    </select>
+
+    <!--根据coursename查询分页列表，排除假删的数据：flag=-1 -->
+    <select id="getPageListByLike" resultType="map">
+        select stuId,stuname,telephone,university from student
+        where   deptName = #{deptName}
+        <if test="stuname != 'all'">
+            and stuname like concat('%',#{stuname},'%')
+        </if>
+        limit #{counts},#{pagesize}
+    </select>
+
+    <select id="getFormData" resultType="map">
+        select optionName as label ,optionName as prop , null as model
+        from job_evl_option
+        where optionState = 1
+        order by optionId
+    </select>
+
+    <insert id="addEvl">
+        <foreach collection="list" item="item" separator=";" >
+            insert into job_evaluation (dateId,stuId,optionName,userId,evlScore,jobEvlContent,sumscore)
+            values (#{item.dateId},#{item.stuId},#{item.optionName},#{item.userId},#{item.evlScore},#{item.jobEvlContent},#{item.sumscore})
+        </foreach>
+    </insert>
+
+    <select id="getDeptName" resultType="String">
+        select deptName from user u left join dept d on u.deptNo=d.deptId
+        where userId = #{userId}
+    </select>
+</mapper>

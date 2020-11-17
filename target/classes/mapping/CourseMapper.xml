@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当我们的mapper接口和mapper.xml文件关联时，命名空间namspace的值就需要配置成
+接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.ICourseMapper">
+    <!--根据coursename查询计数 ,排除假删的数据：flag=-1-->
+    <select id="getTotalNumByLike" resultType="int">
+        select count(*) from course
+        <where>
+            flag =1
+            <if test="coursename!= 'all'">
+                and coursename like concat('%',#{coursename},'%')
+            </if>
+            <if test="courseId!= 'all'">
+                and courseId = ${courseId}
+            </if>
+        </where>
+    </select>
+
+    <!--根据coursename查询分页列表，排除假删的数据：flag=-1 -->
+    <select id="getPageListByLike" resultType="map">
+        select courseId,coursename from course
+        <where>
+            flag =1
+            <if test="coursename != 'all'">
+                and coursename like concat('%',#{coursename},'%')
+            </if>
+            <if test="courseId!= 'all'">
+                and courseId = ${courseId}
+            </if>
+        </where>
+        order by courseId
+        limit #{counts},#{pagesize}
+    </select>
+
+    <!--根据course实体类更新-->
+    <update id="update">
+        update course set coursename=#{coursename} where courseId=#{courseId}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="deleteById">
+        delete from course where courseId=#{courseId}
+    </delete>
+
+    <!--考虑假删，设置flag为-1-->
+    <update id="deleteByIdFake">
+        update course set flag = -1 where courseId=#{courseId}
+    </update>
+
+    <!--根据ids假删，设置flag为-1-->
+    <update id="batchDeleteByIds">
+        update course set flag = -1 where courseId in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <!--根据course实体类添加-->
+    <insert id="add">
+        insert into course(coursename) values (#{coursename})
+    </insert>
+
+
+    <!--查询在classcourse中是否有该课程-->
+    <select id="ifClasscourseExist" resultType="int">
+        select count(*) from classcourse  where courseId in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--用于新增，查询名字是否存在，避免重复-->
+    <select id="checkAddName" resultType="int">
+        select count(*) from course where coursename = #{coursename}
+    </select>
+
+</mapper>

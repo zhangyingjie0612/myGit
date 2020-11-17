@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--当mapper接口和mapper.xml文件关联的时候，命名空间Namespace的值就需要配置成接口的全限定名称，将来我们通过mapper接口的方法名来调用sql语句-->
+<mapper namespace="com.jxd.follow_sys.mapper.IManageMapper">
+    <!--用户列表展示及模糊查询-->
+    <select id="managesListByPage" resultType="map">
+        select userId, userName,telephone,sex,email,idcard,birthday, d.deptName deptName from
+        user u left join dept d
+        on u.deptNo = d.deptId
+        <where>
+            u.flag = 1
+            <if test="userName!='all'">
+                and userName like '%' #{userName} '%'
+            </if>
+            <if test="deptName!='all'">
+                and deptName like '%' #{deptName} '%'
+            </if>
+            and roleId=2
+        </where>
+        limit #{counts},#{pageSize}
+    </select>
+
+    <select id="managesListByLike" resultType="map">
+        select userId, userName,telephone,sex,email,idcard,birthday, d.deptName deptName from
+        user u left join dept d
+        on u.deptNo = d.deptId
+        <where>
+            u.flag = 1
+            <if test="userName!='all'">
+                and userName like '%' #{userName} '%'
+            </if>
+            <if test="deptName!='all'">
+                and deptName like '%' #{deptName} '%'
+            </if>
+            and roleId=2
+        </where>
+    </select>
+    <insert id="addManage">
+        insert into user
+        (userName,sex,telephone,idCard,email,note,birthday,photo,pwd,flag,roleId)
+        values
+        (#{user.userName},#{user.sex},#{user.telephone},#{user.idCard},#{user.email},#{user.note},#{user.birthday},#{user.photo},'123',1,2)
+    </insert>
+
+    <!--    编辑教师-->
+    <update id="updateManage" >
+        update user set
+        sex= #{sex},telephone= #{telephone},
+        idCard= #{idcard},email= #{email},note= #{note},
+        birthday= #{birthday},photo= #{photo}
+        where userName= #{userName}
+    </update>
+    <!--批量删除用户，批量修改状态为4-->
+    <update id="delManages">
+        update user set flag=4 where userId in
+        <foreach collection="list" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </update>
+    <!--    修改经理密码模块-->
+    <!--    获取经理密码-->
+    <select id="getManagePwd" resultType="String">
+        select pwd from user where userId = #{userId}
+    </select>
+    <!--    修改密码-->
+    <update id="changeManagePwd" >
+        update user set pwd= #{pwd} where userId = #{userId}
+    </update>
+</mapper>
